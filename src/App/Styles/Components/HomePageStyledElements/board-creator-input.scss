@@ -1,0 +1,56 @@
+.board-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: 0.5s opacity;
+  transition-timing-function: ease-out;
+  z-index: 500;
+
+  opacity: 0;
+  display: none;
+
+  &.active {
+    opacity: 1 !important;
+    display: block !important;
+  }
+}
+
+.board-input-wrapper {
+  z-index: 510;
+
+  background: rgba(255, 255, 255, 0.7);
+  position: fixed;
+  transition: 0.3s;
+  inset: 75% 50%;
+  transform: translateX(-50%);
+  height: 70px;
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 3px 3px 3px 0 $forth-color;
+  
+  &.active {
+      inset-block-start: 50%;
+      border-radius: 50px;
+      height: 100px;
+      box-shadow: 0 0 0 8px $forth-color;
+  }
+}
+
+.board-input {
+  border-radius: inherit;
+  background: inherit;
+  padding-inline: 20px;
+  height: 100%;
+  width: 100%;
+  font-size: 1.5rem;
+  transition: 0.3s;
+
+  &:focus {
+    font-size: 1.7rem;
+    padding-inline-start: 48px;
+    outline: none;
+  }
+}
