@@ -1,0 +1,66 @@
+.nav-bar {
+    height: 100px;
+    background-color: $primary-color;
+    padding-inline: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+        color: white;
+        font-size: 35px;
+
+        .home-nav-link {
+            font-size: 50px;
+        }
+
+        .orange {
+            color: $secondary-color;
+        }
+    }
+
+    .link-animation {
+        a {
+            background-image: linear-gradient(to right,
+                    $secondary-color,
+                    $secondary-color 50%,
+                    white 50%);
+            background-size: 200% 100%;
+            background-position: -100%;
+            display: inline-block;
+            padding: 5px 0;
+            position: relative;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease-in-out;
+        }
+
+        a:before {
+            content: '';
+            background: $secondary-color;
+            display: block;
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        a:hover {
+            background-position: 0;
+        }
+
+        a:hover::before {
+            width: 100%;
+        }
+
+        a.active {
+            background-position: 0;
+        }
+
+        a.active::before {
+            width: 100%;
+        }
+    }
+}

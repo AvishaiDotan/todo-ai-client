@@ -1,0 +1,13 @@
+.full-blue-square {
+    position: absolute;
+    inset-inline-end: 256px;
+    inset-block-end: 100px;
+    background-color: #52A7D7;
+    height: 178px;
+    width: 178px;
+    transition: 0.3s;
+
+    &:hover {
+        border-radius: 50%;
+    }
+}

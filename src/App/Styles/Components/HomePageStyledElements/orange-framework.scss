@@ -1,0 +1,39 @@
+.orange-framework {
+    width: 220px;
+    height: 220px;
+    background-color: $secondary-color;
+    position: absolute;
+    inset-block-start: 100px;
+    inset-inline-start: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+
+    .inside-filler {
+        background-color: $primary-color;
+        width: 178px;
+        height: 178px;
+        border: 3px solid black;
+        border-radius: 3px;
+        box-shadow: 0px 0px 10px inset black;
+        transition: 0.3s;
+        
+        &:hover {
+            // animation: rotateShrink 2s ease-in infinite;
+            border-radius: 50%;
+        }
+    }
+
+
+}
+
+// @keyframes rotateShrink {
+//     0% {
+//       border-radius: 0px;
+//     }
+//     50% {
+//       border-radius: 50%;
+//     }
+
+//   }

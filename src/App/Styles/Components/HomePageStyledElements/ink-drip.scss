@@ -1,0 +1,22 @@
+.ink-drip {
+    position: absolute;
+    left: -136px;
+    bottom: 120px;
+
+    &:hover {
+        animation: rotateAnimation 20s infinite;
+    }
+    
+
+}
+
+@keyframes rotateAnimation {
+    0% {
+      transform: rotate3d(1, 1, 1, 0deg);
+    }
+    
+    100% {
+      transform: rotate3d(1, 1, 1, 447deg);
+    }
+  }
+

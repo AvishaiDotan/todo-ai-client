@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './App/Styles/Setup/reset.css';
+@import './App/Styles/Setup/typography.scss';
+@import './App/Styles/Setup/pallet.scss'; 
+
+@import 'App/Styles/Components/HomePageStyledElements/full-blue-square.scss';
+@import 'App/Styles/Components/HomePageStyledElements/orange-framework.scss';
+@import 'App/Styles/Components/HomePageStyledElements/three-dimensions-cube.scss';
+@import 'App/Styles/Components/HomePageStyledElements/photographer.scss';
+@import 'App/Styles/Components/HomePageStyledElements/playing-music.scss';
+@import 'App/Styles/Components/HomePageStyledElements/ink-drip.scss';
+
+@import 'App/Styles/Components/nav-bar.scss';
+@import 'App/Styles/Components/home-page.scss';
