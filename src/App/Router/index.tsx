@@ -5,22 +5,26 @@ import Completed from '../Pages/Completed'
 import Boards from '../Pages/Boards'
 
 export const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <App />,
-      children: [
-        {
-          path: 'home',
-          element: <HomePage />,
-        },
-        {
-            path: 'completed',
-            element: <Completed />,
-        },
-        {
-            path: 'boards',
-            element: <Boards />,
-        },
-      ],
-    },
-  ])
+  {
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: '',
+        element: <Navigate to={'/home'} />,
+      },
+      {
+        path: 'home',
+        element: <HomePage />,
+      },
+      {
+        path: 'completed',
+        element: <Completed />,
+      },
+      {
+        path: 'boards',
+        element: <Boards />,
+      },
+    ],
+  },
+])
