@@ -10,6 +10,8 @@ import OrangeFramework from '../Components/HomePageStyledElements/OrangeFramewor
 import Photographer from '../Components/HomePageStyledElements/Photographer'
 import PlayingMusic from '../Components/HomePageStyledElements/PlayingMusic'
 import ThreeDimensionsCube from '../Components/HomePageStyledElements/ThreeDimensionsCube'
+import Skate from "../Components/HomePageStyledElements/Skate";
+
 
 export default function HomePage() {
   const [isActive, setIsActive] = useState(false)
@@ -29,6 +31,7 @@ export default function HomePage() {
       <Photographer />
       <PlayingMusic />
       <InkDrip />
+      <Skate />
       <BoardCreatorInput
         isActive={isActive}
         onActiveChange={(val) => setIsActive(val)}
