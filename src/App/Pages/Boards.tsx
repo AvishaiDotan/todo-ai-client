@@ -1,5 +1,20 @@
+import  { useEffect } from 'react';
+
 export default function Boards() {
-  return (
-    <div>Boards</div>
-  )
+
+	useEffect(() => {
+	
+		return () => {
+		  
+		};
+	}, []); // Empty dependency array to run the effect only once
+	
+
+
+
+	return (
+		<section className="boards-page">
+			
+		</section>
+	)
 }
