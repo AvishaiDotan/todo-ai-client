@@ -1,5 +1,8 @@
 import { useState } from 'react'
 
+import { useAppDispatch } from '../Store'
+import { createBoard } from '../Store/Actions/boards.actions'
+
 import BoardCreatorInput from '../Components/HomePageStyledElements/BoardCreatorInput'
 import FullBlueSquare from '../Components/HomePageStyledElements/FullBlueSquare'
 import InkDrip from '../Components/HomePageStyledElements/InkDrip'
@@ -11,6 +14,12 @@ import ThreeDimensionsCube from '../Components/HomePageStyledElements/ThreeDimen
 export default function HomePage() {
   const [isActive, setIsActive] = useState(false)
   const [todoValue, setTodoValue] = useState('')
+  const dispatch = useAppDispatch();
+  
+
+  const handleSubmit = () => {
+    dispatch(createBoard(todoValue))
+  }
 
   return (
     <main className='home-page'>
@@ -25,6 +34,7 @@ export default function HomePage() {
         onActiveChange={(val) => setIsActive(val)}
         value={todoValue}
         onValueChange={(val) => setTodoValue(val)}
+        onSubmit={handleSubmit}
       />
     </main>
   )

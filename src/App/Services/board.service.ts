@@ -1,7 +1,11 @@
 import { httpService } from './http.service'
 
-function createBoard(board: Board) {
-  return httpService.post<Board>('/boards', board)
+function createBoard(prompt: string) {
+  return httpService.post<Board>('/boards', { todo: prompt })
+}
+
+function getBoards() {
+  return httpService.get<Board[]>('/boards')
 }
 
 function getBoard(id: number) {
@@ -14,6 +18,7 @@ function getBoardExcel(id: number) {
 
 export const boardService = {
   createBoard,
+  getBoards,
   getBoard,
   getBoardExcel,
 }

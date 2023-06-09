@@ -5,6 +5,7 @@ interface BoardCreatorInputProps {
   onActiveChange: (active: boolean) => void
   value: string
   onValueChange: (value: string) => void
+  onSubmit: () => void
 }
 
 function BoardCreatorInput(props: BoardCreatorInputProps) {
@@ -27,6 +28,10 @@ function BoardCreatorInput(props: BoardCreatorInputProps) {
           value={props.value}
           placeholder='What do you need to do?'
         />
+
+        <button type='button' onClick={props.onSubmit}>
+          Submit
+        </button>
       </div>
     </>
   )
