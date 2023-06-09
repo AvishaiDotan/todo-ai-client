@@ -3,6 +3,7 @@ import InkDrip from "../Components/HomePageStyledElements/InkDrip";
 import OrangeFramework from "../Components/HomePageStyledElements/OrangeFramework";
 import Photographer from "../Components/HomePageStyledElements/Photographer";
 import PlayingMusic from "../Components/HomePageStyledElements/PlayingMusic";
+import Skate from "../Components/HomePageStyledElements/Skate";
 import ThreeDimensionsCube from "../Components/HomePageStyledElements/ThreeDimensionsCube";
 
 export default function HomePage() {
@@ -14,6 +15,7 @@ export default function HomePage() {
       <Photographer />
       <PlayingMusic />
       <InkDrip />
+      <Skate />
     </main>
   )
 }
