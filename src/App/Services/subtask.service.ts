@@ -16,7 +16,7 @@ function deleteSubTask(subtaskId: number) {
   return httpService.delete(`/subtasks/${subtaskId}`)
 }
 
-export const boardService = {
+export const subtaskService = {
   getCompletedTasks,
   createSubTask,
   updateSubTask,
