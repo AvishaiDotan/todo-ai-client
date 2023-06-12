@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-interface BoardCreatorInputProps {
+interface IBoardCreatorInputProps {
   isActive: boolean
   onActiveChange: (active: boolean) => void
   value: string
@@ -8,7 +8,7 @@ interface BoardCreatorInputProps {
   onSubmit: () => void
 }
 
-function BoardCreatorInput(props: BoardCreatorInputProps) {
+function BoardCreatorInput(props: IBoardCreatorInputProps) {
   const activeClass = useMemo(() => {
     return props.isActive ? 'active' : ''
   }, [props.isActive])
