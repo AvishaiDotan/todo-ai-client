@@ -1,0 +1,9 @@
+.shared-todo-list {
+    & > * {
+        margin-inline-start: 1.5rem;
+    }
+
+    &.open > * {
+        display: block
+    }
+}
