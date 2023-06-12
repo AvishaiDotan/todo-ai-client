@@ -1,4 +1,9 @@
 import { useState } from 'react'
+import { RxDragHandleDots2 as DragIcon } from 'react-icons/rx'
+import {
+  TbCirclePlus as PlusIcon,
+  TbCircleMinus as MinusIcon,
+} from 'react-icons/tb'
 
 import SharedSubTask from './SharedSubTask'
 
@@ -18,9 +23,17 @@ export default function SharedTodo(props: ISharedTodoProps) {
   ))
 
   return (
-    <div className='shared-todo' onClick={() => setIsOpen((prev) => !prev)}>
-      <h3>{props.todo.title}</h3>
-      <ul className={`shared-todo-list ${isOpen ? 'open' : ''}`}>
+    <div className='shared-todo'>
+      <div className='flex flex-row items-center gap-1'>
+        <DragIcon />
+        {isOpen ? (
+          <MinusIcon onClick={() => setIsOpen(false)} />
+        ) : (
+          <PlusIcon onClick={() => setIsOpen(true)} />
+        )}
+        <h3 className='title'>{props.todo.title}</h3>
+      </div>
+      <ul className={`shared-todo-list ${isOpen ? 'opened' : ''}`}>
         {subTaskList}
       </ul>
     </div>
