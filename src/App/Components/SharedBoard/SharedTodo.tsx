@@ -10,7 +10,6 @@ import SharedSubTask from './SharedSubTask'
 interface ISharedTodoProps {
   todo: Todo
   onSubTaskChange: (value: boolean, subtask: SubTask) => void
-  onTodoStatusChange: (isDone: boolean, todo: Todo) => void
 }
 
 export default function SharedTodo(props: ISharedTodoProps) {

@@ -65,16 +65,11 @@ export default function SharedBoard() {
     })
   }
 
-  const handleTodoStatusChange = (isDone: boolean, todo: Todo) => {
-    throw new Error('Function not implemented.')
-  }
-
   const todoList = board?.todos.map((todo) => (
     <SharedTodo
       key={todo.id}
       todo={todo}
       onSubTaskChange={handleSubTaskChange}
-      onTodoStatusChange={handleTodoStatusChange}
     />
   ))
 
