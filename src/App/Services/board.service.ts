@@ -1,7 +1,7 @@
 import { httpService } from './http.service'
 
 function createBoard(prompt: string) {
-  return httpService.post<Board>('/boards', { todo: prompt })
+  return httpService.post<Board>('/boards', { prompt })
 }
 
 function getBoards() {
