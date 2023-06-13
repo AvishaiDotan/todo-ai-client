@@ -1,5 +1,5 @@
 interface BaseEntity {
-  id?: number
+  id: number
 }
 
 interface Board extends BaseEntity {
@@ -11,6 +11,12 @@ interface Todo extends BaseEntity {
   title: string
   subTasks: SubTask[]
   boardId: number
+  order: number
+}
+
+type TodoOrderSave = {
+  boardId: number
+  todos: Pick<Todo, 'id' | 'order'>[]
 }
 
 interface SubTask extends BaseEntity {

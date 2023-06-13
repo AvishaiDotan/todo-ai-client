@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { ReactSortable } from 'react-sortablejs'
 
 import { boardService } from '@/Services/board.service'
 import { subtaskService } from '@/Services/subtask.service'
-// import { todoService } from '@/Services/todo.service'
+import { todoService } from '@/Services/todo.service'
+
 import SharedTodo from '@/Components/SharedBoard/SharedTodo'
 
 export default function SharedBoard() {
@@ -35,8 +37,8 @@ export default function SharedBoard() {
         isDone: value,
       }
 
-      await subtaskService.updateSubTask(subtaskToUpdate)
       updateSubTask(subtaskToUpdate)
+      await subtaskService.updateSubTask(subtaskToUpdate)
     } catch (error) {
       updateSubTask(subtask)
     }
@@ -65,6 +67,28 @@ export default function SharedBoard() {
     })
   }
 
+  const handleSortChange = async (todos: Todo[]) => {
+    const prevCopy = [...board!.todos]
+
+    try {
+      setBoard((prev) => ({
+        ...prev!,
+        todos,
+      }))
+
+      const todoOrders = todos.map((t, idx) => ({ id: t.id, order: idx + 1 }))
+      await todoService.saveTodosOrder({
+        boardId: board!.id,
+        todos: todoOrders,
+      })
+    } catch (error) {
+      setBoard((prev) => ({
+        ...prev!,
+        todos: prevCopy,
+      }))
+    }
+  }
+
   const todoList = board?.todos.map((todo) => (
     <SharedTodo
       key={todo.id}
@@ -76,7 +100,17 @@ export default function SharedBoard() {
   return (
     <div className='shared-board'>
       <h1>{board?.name}</h1>
-      {todoList}
+      {board && (
+        <ReactSortable
+          list={board.todos}
+          setList={handleSortChange}
+          group='groupName'
+          animation={200}
+          delayOnTouchOnly
+          delay={2}>
+          {todoList}
+        </ReactSortable>
+      )}
     </div>
   )
 }
