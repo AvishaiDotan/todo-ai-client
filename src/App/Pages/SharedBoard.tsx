@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ReactSortable } from 'react-sortablejs'
+import { ReactSortable, Sortable, SortableEvent } from 'react-sortablejs'
+import { debounce } from 'lodash'
 
 import { boardService } from '@/Services/board.service'
 import { subtaskService } from '@/Services/subtask.service'
@@ -17,6 +18,10 @@ export default function SharedBoard() {
   useEffect(() => {
     if (boardId) loadBoard(+boardId)
   }, [])
+
+  useEffect(() => {
+    board && handleSaveTodosOrder()
+  }, [board])
 
   const loadBoard = async (id: number) => {
     try {
@@ -67,26 +72,22 @@ export default function SharedBoard() {
     })
   }
 
-  const handleSortChange = async (todos: Todo[]) => {
-    const prevCopy = [...board!.todos]
-
+  const handleSaveTodosOrder = debounce(async () => {
     try {
-      setBoard((prev) => ({
-        ...prev!,
-        todos,
-      }))
-
-      const todoOrders = todos.map((t, idx) => ({ id: t.id, order: idx + 1 }))
       await todoService.saveTodosOrder({
         boardId: board!.id,
-        todos: todoOrders,
+        todos: board!.todos,
       })
     } catch (error) {
-      setBoard((prev) => ({
-        ...prev!,
-        todos: prevCopy,
-      }))
+      console.log(error)
     }
+  }, 1000)
+
+  const handleSortableSetList = async (todos: Todo[]) => {
+    setBoard((prev) => ({
+      ...prev!,
+      todos: todos.map((t, idx) => ({ ...t, order: idx + 1 })),
+    }))
   }
 
   const todoList = board?.todos.map((todo) => (
@@ -103,8 +104,8 @@ export default function SharedBoard() {
       {board && (
         <ReactSortable
           list={board.todos}
-          setList={handleSortChange}
-          group='groupName'
+          setList={handleSortableSetList}
+          // group='groupName'
           animation={200}
           delayOnTouchOnly
           delay={2}>

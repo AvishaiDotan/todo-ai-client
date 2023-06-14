@@ -22,13 +22,19 @@ export default function SharedTodo(props: ISharedTodoProps) {
   ))
 
   return (
-    <div className='shared-todo'>
+    <div className='shared-todo' data-id={props.todo.id}>
       <div className='flex flex-row items-center gap-1'>
-        <DragIcon />
+        <DragIcon className='hidden md:inline cursor-grab transition hover:text-gray-300 todo-list-icon' />
         {isOpen ? (
-          <MinusIcon onClick={() => setIsOpen(false)} />
+          <MinusIcon
+            className='cursor-pointer transition hover:text-gray-300 todo-list-icon'
+            onClick={() => setIsOpen(false)}
+          />
         ) : (
-          <PlusIcon onClick={() => setIsOpen(true)} />
+          <PlusIcon
+            className='cursor-pointer transition hover:text-gray-300 todo-list-icon'
+            onClick={() => setIsOpen(true)}
+          />
         )}
         <h3 className='title'>{props.todo.title}</h3>
       </div>
