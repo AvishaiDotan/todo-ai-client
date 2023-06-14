@@ -21,36 +21,73 @@
 .board-input-wrapper {
   z-index: 510;
 
-  background: rgba(255, 255, 255, 0.7);
+  background: white;
   position: fixed;
   transition: 0.3s;
   inset: 75% 50%;
   transform: translateX(-50%);
   height: 70px;
   width: 80%;
-  border-radius: 10px;
+  border-radius: 15px;
   box-shadow: 3px 3px 3px 0 $forth-color;
-  
+
+  display: flex;
+  justify-content: space-between;
+
   &.active {
-      inset-block-start: 50%;
-      border-radius: 50px;
-      height: 100px;
-      box-shadow: 0 0 0 8px $forth-color;
+    inset-block-start: 50%;
+    border-radius: 50px;
+    height: 100px;
+    box-shadow: 0 0 0 8px $forth-color;
+  }
+
+  &.active .submit-btn {
+    border-radius: 50px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  & .submit-btn {
+    width: 200px;
+    background-color: $secondary-color;
+    transition: 0.3s;
+    border-radius: 15px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:disabled {
+      background-color: $forth-color;
+    }
   }
 }
 
 .board-input {
-  border-radius: inherit;
-  background: inherit;
+  border-radius: 15px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
   padding-inline: 20px;
   height: 100%;
   width: 100%;
   font-size: 1.5rem;
   transition: 0.3s;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
 
   &:focus {
     font-size: 1.7rem;
-    padding-inline-start: 48px;
     outline: none;
   }
+
+  &:disabled {
+    color: gray;
+    background: rgba(0, 0, 0, 0.1);
+    cursor: not-allowed;
+  }
+}
+
+.board-input-wrapper.active .board-input {
+  padding-inline-start: 48px;
 }
