@@ -15,7 +15,7 @@ function getLoggedInUser(): Promise<IUser> {
 }
 
 function registerUser(userData: IRegisterPayload): Promise<ILoginResult> {
-  return httpService.post<ILoginResult>('/account/signup', userData)
+  return httpService.post<ILoginResult>('/account/register', userData)
 }
 
 function loginUser(credentials: ILoginCredentials): Promise<ILoginResult> {
