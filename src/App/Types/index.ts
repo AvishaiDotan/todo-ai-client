@@ -24,3 +24,18 @@ interface SubTask extends BaseEntity {
   isDone: boolean
   todoId: number
 }
+
+interface ILoginCredentials {
+  email: string
+  password: string
+}
+
+interface IUser extends BaseEntity {
+  email: string
+  fullName: string
+}
+
+interface ILoginResult {
+  user: IUser
+  token: string
+}
