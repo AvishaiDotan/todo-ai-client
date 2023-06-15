@@ -25,14 +25,18 @@ interface SubTask extends BaseEntity {
   todoId: number
 }
 
-interface ILoginCredentials {
-  email: string
-  password: string
-}
-
 interface IUser extends BaseEntity {
   email: string
   fullName: string
+}
+
+interface IRegisterPayload extends Omit<IUser, 'id'> {
+  password: string
+}
+
+interface ILoginCredentials {
+  email: string
+  password: string
 }
 
 interface ILoginResult {
