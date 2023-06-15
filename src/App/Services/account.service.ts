@@ -8,6 +8,7 @@ axios.interceptors.request.use((req) => {
 })
 
 const STORAGE_KEY = 'authToken'
+const LOGGEDOUT_TIMEOUT = 1000
 
 function registerUser(user: IUser): Promise<ILoginResult> {
   return httpService.post<ILoginResult>('/account/signup', user)
@@ -18,7 +19,8 @@ function loginUser(credentials: ILoginCredentials): Promise<ILoginResult> {
 }
 
 function logout(): Promise<any> {
-  return httpService.post('/account/logout', {})
+  // return httpService.post('/account/logout', {})
+  return new Promise((resolve) => setTimeout(resolve, LOGGEDOUT_TIMEOUT))
 }
 
 function saveAuthToken(token: string): void {
