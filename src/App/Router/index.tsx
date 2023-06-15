@@ -5,6 +5,7 @@ import HomePage from '@/Pages/HomePage'
 import Completed from '@/Pages/Completed'
 import Boards from '@/Pages/Boards'
 import SharedBoard from '@/Pages/SharedBoard'
+import AuthPage from '@/Pages/AuthPage'
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,14 @@ export const router = createBrowserRouter([
       {
         path: 'boards',
         element: <Boards />,
+      },
+      {
+        path: 'login',
+        element: <AuthPage isLoginPage={true} />,
+      },
+      {
+        path: 'register',
+        element: <AuthPage isLoginPage={false} />,
       },
       {
         path: 'shared/:boardId',
