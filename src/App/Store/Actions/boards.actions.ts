@@ -1,8 +1,8 @@
+import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
 import { boardService } from '../../Services/board.service'
 import { IBoardState } from '../Reducers/boards.reducer'
-import { AnyAction } from 'redux'
 
 export const ACTIONS = {
   CREATE_BOARD: 'CREATE_BOARD',
