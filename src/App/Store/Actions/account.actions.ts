@@ -13,51 +13,39 @@ export const ACTIONS = {
 
 export function registerUser(
   userData: IRegisterPayload
-): ThunkAction<void, IAccountState, unknown, AnyAction> {
+): ThunkAction<Promise<void>, IAccountState, unknown, AnyAction> {
   return async (dispatch) => {
-    try {
-      const { user, token } = await accountService.registerUser(userData)
-      accountService.saveAuthToken(token)
-      dispatch({ type: ACTIONS.SET_LOGGED_USER, user })
-    } catch (err) {
-      console.log(err)
-    }
+    const { user, token } = await accountService.registerUser(userData)
+    accountService.saveAuthToken(token)
+    dispatch({ type: ACTIONS.SET_LOGGED_USER, user })
   }
 }
 
 export function loginUser(
   credentials: ILoginCredentials
-): ThunkAction<void, IAccountState, unknown, AnyAction> {
+): ThunkAction<Promise<void>, IAccountState, unknown, AnyAction> {
   return async (dispatch) => {
-    try {
-      const { user, token } = await accountService.loginUser(credentials)
-      accountService.saveAuthToken(token)
-      dispatch({ type: ACTIONS.SET_LOGGED_USER, user })
-    } catch (err) {
-      console.log(err)
-    }
+    const { user, token } = await accountService.loginUser(credentials)
+    accountService.saveAuthToken(token)
+    dispatch({ type: ACTIONS.SET_LOGGED_USER, user })
   }
 }
 
 export function logoutUser(): ThunkAction<
-  void,
+  Promise<void>,
   IAccountState,
   unknown,
   AnyAction
 > {
   return async (dispatch) => {
-    try {
-      await accountService.logoutUser()
-      accountService.clearAuthToken()
-      dispatch({ type: ACTIONS.SET_LOGGED_USER, user: null })
-    } catch (err) {
-      console.log(err)
-    }
+    await accountService.logoutUser()
+    accountService.clearAuthToken()
+    dispatch({ type: ACTIONS.SET_LOGGED_USER, user: null })
   }
 }
 
 export function loadUser(): ThunkAction<
-  void,
+  Promise<void>,
   IAccountState,
   unknown,
   AnyAction
