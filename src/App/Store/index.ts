@@ -7,6 +7,7 @@ import {
 import thunk from 'redux-thunk'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
+import { accountReducer } from './Reducers/account.reducer'
 import { boardsReducer } from './Reducers/boards.reducer'
 
 // @ts-ignore
@@ -14,6 +15,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const rootReducer = combineReducers({
   boards: boardsReducer,
+  account: accountReducer,
 })
 
 export const store = createStore(
