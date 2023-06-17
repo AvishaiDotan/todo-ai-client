@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios'
+
 import { storageService } from './storage.service'
 import { httpService, axios } from './http.service'
 
@@ -6,6 +8,19 @@ axios.interceptors.request.use((req) => {
   req.headers.Authorization = 'Bearer ' + loadAuthToken()
   return req
 })
+
+axios.interceptors.response.use(
+  (req) => req,
+  (error: AxiosError<any>) => {
+    if (!error.response?.data) return
+
+    error.message = error.response.data?.message || error.message
+    if (error.response.data?.errors)
+      error.message = error.response.data.errors[0]
+
+    return Promise.reject(error)
+  }
+)
 
 const STORAGE_KEY = 'authToken'
 const LOGGEDOUT_TIMEOUT = 1000
