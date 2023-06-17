@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
         element: <AuthPage isLoginPage={true} />,
       },
       {
-        path: 'register',
+        path: 'signup',
         element: <AuthPage isLoginPage={false} />,
       },
       {
