@@ -82,7 +82,7 @@ export default function AuthPage(props: IAuthPageProps) {
       <h1>{props.isLoginPage ? 'Log-in' : 'Sign-up'}</h1>
       <form
         onSubmit={handleSubmit}
-        className='w-full md:w-1/2 flex flex-col gap-3'>
+        className='w-full md:w-1/2 xl:w-1/3 2xl:w-1/4 flex flex-col gap-3'>
         {inputs.map((inp) => (
           <React.Fragment key={inp.name}>
             <label htmlFor={`${inp.name}-input`}>{inp.label}</label>
