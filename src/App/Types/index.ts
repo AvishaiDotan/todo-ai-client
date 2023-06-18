@@ -30,7 +30,9 @@ interface IUser extends BaseEntity {
   fullName: string
 }
 
-interface IRegisterPayload extends Omit<IUser, 'id'> {
+interface IRegisterPayload extends Omit<IUser, 'id' | 'fullName'> {
+  firstName: string
+  lastName: string
   password: string
 }
 
