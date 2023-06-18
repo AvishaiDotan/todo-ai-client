@@ -26,6 +26,7 @@ export default function HomePage() {
       await dispatch(createBoard(todoValue))
       navigate('/boards')
     } catch (error) {
+      console.log(error)
     } finally {
       setIsLoading(false)
     }

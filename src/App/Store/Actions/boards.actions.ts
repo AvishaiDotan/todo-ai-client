@@ -12,11 +12,7 @@ export function createBoard(
   prompt: string
 ): ThunkAction<void, IBoardState, unknown, AnyAction> {
   return async (dispatch) => {
-    try {
-      const board = await boardService.createBoard(prompt)
-      dispatch({ type: ACTIONS.CREATE_BOARD, board })
-    } catch (err) {
-      console.log(err)
-    }
+    const board = await boardService.createBoard(prompt)
+    dispatch({ type: ACTIONS.CREATE_BOARD, board })
   }
 }

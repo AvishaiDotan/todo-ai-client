@@ -1,5 +1,6 @@
-import { useMemo } from 'react'
+import { FormEvent, useMemo } from 'react'
 import { ImSpinner9 } from 'react-icons/im'
+import { FaPlay } from 'react-icons/fa'
 
 interface IBoardCreatorInputProps {
   isLoading: boolean
@@ -15,35 +16,39 @@ function BoardCreatorInput(props: IBoardCreatorInputProps) {
     return props.isActive ? 'active' : ''
   }, [props.isActive])
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    props.onSubmit()
+  }
+
   return (
     <>
       <div
         className={`board-backdrop ${activeClass}`}
         onClick={() => !props.isLoading && props.onActiveChange(false)}></div>
 
-      <div className={`board-input-wrapper ${activeClass}`}>
+      <form
+        className={`board-input-wrapper ${activeClass}`}
+        onSubmit={handleSubmit}>
         <input
+          type='text'
+          required
           disabled={props.isLoading}
           className='board-input'
-          type='text'
+          value={props.value}
           onChange={(e) => props.onValueChange(e.target.value)}
           onClick={() => props.onActiveChange(true)}
-          value={props.value}
           placeholder='What do you need to do?'
         />
 
-        <button
-          className='submit-btn'
-          type='button'
-          onClick={props.onSubmit}
-          disabled={props.isLoading}>
+        <button type='submit' className='submit-btn' disabled={props.isLoading}>
           {props.isLoading ? (
-            <ImSpinner9 className='w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600' />
+            <ImSpinner9 className='w-8 h-8 mr-2 text-gray-200 animate-spin fill-blue-600' />
           ) : (
-            <span>Submit</span>
+            <FaPlay className='text-[32px] text-primary' />
           )}
         </button>
-      </div>
+      </form>
     </>
   )
 }
