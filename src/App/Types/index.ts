@@ -27,8 +27,7 @@ interface SubTask extends BaseEntity {
 
 interface IUser extends BaseEntity {
   email: string
-  firstName: string
-  lastName: string
+  fullName: string
 }
 
 interface IRegisterPayload extends Omit<IUser, 'id'> {
