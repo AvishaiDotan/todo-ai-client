@@ -8,7 +8,10 @@ const initialState: IAccountState = {
   loggedUser: null,
 }
 
-export function accountReducer(state = initialState, action: any) {
+export function accountReducer(
+  state = initialState,
+  action: any
+): IAccountState {
   switch (action.type) {
     case ACTIONS.SET_LOGGED_USER:
       return {
