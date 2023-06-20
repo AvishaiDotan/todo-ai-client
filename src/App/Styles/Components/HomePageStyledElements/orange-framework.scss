@@ -14,9 +14,9 @@
         background-color: $primary-color;
         width: 178px;
         height: 178px;
-        border: 3px solid black;
+        border: 3px solid $black-color;
         border-radius: 3px;
-        box-shadow: 0px 0px 10px inset black;
+        box-shadow: 0px 0px 10px inset $black-color;
         transition: 0.3s;
         
         &:hover {

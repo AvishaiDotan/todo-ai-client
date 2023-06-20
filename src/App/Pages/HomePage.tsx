@@ -8,10 +8,12 @@ import BoardCreatorInput from '../Components/HomePageStyledElements/BoardCreator
 import FullBlueSquare from '../Components/HomePageStyledElements/FullBlueSquare'
 import InkDrip from '../Components/HomePageStyledElements/InkDrip'
 import OrangeFramework from '../Components/HomePageStyledElements/OrangeFramework'
-import Photographer from '../Components/HomePageStyledElements/Photographer'
+import CameraWrapper from '../Components/HomePageStyledElements/CameraWrapper'
 import PlayingMusic from '../Components/HomePageStyledElements/PlayingMusic'
 import ThreeDimensionsCube from '../Components/HomePageStyledElements/ThreeDimensionsCube'
 import Skate from '../Components/HomePageStyledElements/Skate'
+
+import womenPhotographer from '../../../src/App/Assets/photographer_women_holding_camera_towards_you.png'
 
 export default function HomePage() {
   const [isActive, setIsActive] = useState(false)
@@ -51,4 +53,35 @@ export default function HomePage() {
       />
     </main>
   )
+    const [isActive, setIsActive] = useState(false)
+    const [todoValue, setTodoValue] = useState('')
+    const dispatch = useAppDispatch();
+
+    
+    const handleSubmit = () => {
+        dispatch(createBoard(todoValue))
+    }
+    
+
+
+    return (
+        <main className="home-page">
+            <OrangeFramework />
+            <FullBlueSquare />
+            <ThreeDimensionsCube />
+            <CameraWrapper isFlashOn={true}>
+                <img className="photographer-img" src={womenPhotographer}></img>
+            </CameraWrapper>
+            <PlayingMusic />
+            <InkDrip />
+            <Skate />
+            <BoardCreatorInput
+                isActive={isActive}
+                onActiveChange={(val) => setIsActive(val)}
+                value={todoValue}
+                onValueChange={(val) => setTodoValue(val)}
+                onSubmit={handleSubmit}
+            />
+        </main>
+    )
 }

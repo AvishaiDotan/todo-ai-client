@@ -53,6 +53,31 @@ export default function NavBar() {
 
   return (
     <nav className='nav-bar main-font-family'>
+import { PageRoute } from '@/Types';
+import PageRouteHook from '../Hooks/BoardHooks/PageRouteHook'
+
+export default function NavBar() {
+
+  const route = PageRouteHook();
+  const getClassByRoute = (route: PageRoute) => {
+      switch (route) {
+          case PageRoute.boards:
+              return "boards";
+          case PageRoute.home:
+              return "home";
+          case PageRoute.completed:
+              return "completed";
+          case PageRoute.shared: 
+              return "shared";
+          case PageRoute.todos:
+              return "todos";
+          default:
+              return "home"
+      }
+  }
+
+  return (
+    <nav className={`nav-bar main-font-family ${getClassByRoute(route)}`}>
       <div>
         <NavLink to='/home'>
           <HomeNavLink />
