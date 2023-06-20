@@ -57,9 +57,9 @@ export function loadUser(): ThunkAction<
 
       const user = await accountService.getLoggedInUser()
       dispatch({ type: ACTIONS.SET_LOGGED_USER, user })
-    } catch (error) {
+    } catch (error: any) {
       // Incase of invalid / expired token remove from local storage
-      accountService.clearAuthToken()
+      if (error?.response?.status === 401) accountService.clearAuthToken()
       throw error
     }
   }
