@@ -1,9 +1,17 @@
-import React, { ChangeEvent, FormEvent, useMemo, useState } from 'react'
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ImSpinner2 } from 'react-icons/im'
 
 import { loginUser, registerUser } from '@/Store/Actions/account.actions'
 import { useAppDispatch } from '@/Store'
+import { gBoards } from '@/Services/board.service'
+import { createManyBoards } from '@/Store/Actions/boards.actions'
 
 interface IAuthPageProps {
   isLoginPage: boolean
@@ -22,6 +30,10 @@ export default function AuthPage(props: IAuthPageProps) {
     email: '',
     password: '',
   })
+
+  useEffect(() => {
+    setErrorMsg('')
+  }, [props.isLoginPage])
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -69,6 +81,8 @@ export default function AuthPage(props: IAuthPageProps) {
     try {
       await dispatch(storeAction(formInputs))
       navigate('/home')
+
+      if (gBoards.length) await dispatch(createManyBoards(gBoards))
     } catch (error: any) {
       setErrorMsg(error.message)
       console.log(error)

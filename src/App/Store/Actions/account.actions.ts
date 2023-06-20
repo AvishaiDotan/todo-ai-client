@@ -2,7 +2,7 @@ import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
 import { accountService } from '@/Services/account.service'
-import { IAccountState } from '../Reducers/account.reducer'
+import { IAppState } from '@/Store'
 
 export const ACTIONS = {
   SET_LOGGED_USER: 'SET_LOGGED_USER',
@@ -13,7 +13,7 @@ export const ACTIONS = {
 
 export function registerUser(
   userData: IRegisterPayload
-): ThunkAction<Promise<void>, IAccountState, unknown, AnyAction> {
+): ThunkAction<Promise<void>, IAppState, unknown, AnyAction> {
   return async (dispatch) => {
     const { user, token } = await accountService.registerUser(userData)
     accountService.saveAuthToken(token)
@@ -23,7 +23,7 @@ export function registerUser(
 
 export function loginUser(
   credentials: ILoginCredentials
-): ThunkAction<Promise<void>, IAccountState, unknown, AnyAction> {
+): ThunkAction<Promise<void>, IAppState, unknown, AnyAction> {
   return async (dispatch) => {
     const { user, token } = await accountService.loginUser(credentials)
     accountService.saveAuthToken(token)
@@ -33,7 +33,7 @@ export function loginUser(
 
 export function logoutUser(): ThunkAction<
   Promise<void>,
-  IAccountState,
+  IAppState,
   unknown,
   AnyAction
 > {
@@ -46,7 +46,7 @@ export function logoutUser(): ThunkAction<
 
 export function loadUser(): ThunkAction<
   Promise<void>,
-  IAccountState,
+  IAppState,
   unknown,
   AnyAction
 > {

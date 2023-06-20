@@ -9,16 +9,17 @@ const initialState: IBoardState = {
 }
 
 export function boardsReducer(state = initialState, action: any) {
-
   switch (action.type) {
-
     case ACTIONS.CREATE_BOARD:
       return {
         ...state,
-        boards: [
-          ...state.boards,
-          action.board
-        ],
+        boards: [...state.boards, action.board],
+      }
+
+    case ACTIONS.ADD_LOCAL_BOARDS:
+      return {
+        ...state,
+        boards: [...state.boards, ...action.boards],
       }
 
     default:

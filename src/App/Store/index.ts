@@ -7,13 +7,21 @@ import {
 import thunk from 'redux-thunk'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import { accountReducer } from './Reducers/account.reducer'
-import { boardsReducer } from './Reducers/boards.reducer'
+// to avoid annoying error with dispatch function on typescript
+import type {} from 'redux-thunk/extend-redux'
+
+import { IAccountState, accountReducer } from './Reducers/account.reducer'
+import { IBoardState, boardsReducer } from './Reducers/boards.reducer'
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-const rootReducer = combineReducers({
+export interface IAppState {
+  account: IAccountState
+  boards: IBoardState
+}
+
+const rootReducer = combineReducers<IAppState>({
   boards: boardsReducer,
   account: accountReducer,
 })
