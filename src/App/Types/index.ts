@@ -14,7 +14,7 @@ export interface Todo extends BaseEntity {
   order: number
 }
 
-type TodoOrderSave = {
+export type TodoOrderSave = {
   boardId: number
   todos: Pick<Todo, 'id' | 'order'>[]
 }
@@ -25,38 +25,38 @@ export interface SubTask extends BaseEntity {
   todoId: number
 }
 
-interface IUser extends BaseEntity {
+export interface IUser extends BaseEntity {
   email: string
   fullName: string
 }
 
-interface IRegisterPayload extends Omit<IUser, 'id' | 'fullName'> {
+export interface IRegisterPayload extends Omit<IUser, 'id' | 'fullName'> {
   firstName: string
   lastName: string
   password: string
 }
 
-interface ILoginCredentials {
+export interface ILoginCredentials {
   email: string
   password: string
 }
 
-interface ILoginResult {
+export interface ILoginResult {
   user: IUser
   token: string
 }
 export enum PageRoute {
-  home = "home",
-  boards = "boards",
-  todos = "todos",
-  completed = "completed",
-  shared = "shared"
+  home = 'home',
+  boards = 'boards',
+  todos = 'todos',
+  completed = 'completed',
+  shared = 'shared',
 }
 
 export type DataToRender = Board[] | Todo[] | SubTask[]
 export type DataToRenderType = Board | Todo | SubTask
 export enum DataToRenderTypeEnum {
-  board = "board",
-  todo = "todo",
-  subTask = "subTask"
+  board = 'board',
+  todo = 'todo',
+  subTask = 'subTask',
 }

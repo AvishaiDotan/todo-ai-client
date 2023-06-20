@@ -39,7 +39,9 @@ export default function HomePage() {
       <OrangeFramework />
       <FullBlueSquare />
       <ThreeDimensionsCube />
-      <Photographer />
+      <CameraWrapper isFlashOn={true}>
+        <img className='photographer-img' src={womenPhotographer}></img>
+      </CameraWrapper>
       <PlayingMusic />
       <InkDrip />
       <Skate />
@@ -53,35 +55,4 @@ export default function HomePage() {
       />
     </main>
   )
-    const [isActive, setIsActive] = useState(false)
-    const [todoValue, setTodoValue] = useState('')
-    const dispatch = useAppDispatch();
-
-    
-    const handleSubmit = () => {
-        dispatch(createBoard(todoValue))
-    }
-    
-
-
-    return (
-        <main className="home-page">
-            <OrangeFramework />
-            <FullBlueSquare />
-            <ThreeDimensionsCube />
-            <CameraWrapper isFlashOn={true}>
-                <img className="photographer-img" src={womenPhotographer}></img>
-            </CameraWrapper>
-            <PlayingMusic />
-            <InkDrip />
-            <Skate />
-            <BoardCreatorInput
-                isActive={isActive}
-                onActiveChange={(val) => setIsActive(val)}
-                value={todoValue}
-                onValueChange={(val) => setTodoValue(val)}
-                onSubmit={handleSubmit}
-            />
-        </main>
-    )
 }
