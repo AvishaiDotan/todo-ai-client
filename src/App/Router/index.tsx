@@ -6,6 +6,8 @@ import Completed from '@/Pages/Completed'
 import Boards from '@/Pages/Boards'
 import SharedBoard from '@/Pages/SharedBoard'
 
+import { DataToRenderTypeEnum } from '@/Types'
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -25,8 +27,16 @@ export const router = createBrowserRouter([
       },
       {
         path: 'boards',
-        element: <Boards />,
+        element: <Boards dataToRenderType={DataToRenderTypeEnum.board} title='Boards'/>,
       },
+      // {
+      //   path: 'boards/:boardId',
+      //   element: <Boards title='Todo'/>,
+      // },
+      // {
+      //   path: 'boards/:boardId/Todo/:todoId',
+      //   element: <Boards title='Subtasks'/>,
+      // },
       {
         path: 'shared/:boardId',
         element: <SharedBoard />,

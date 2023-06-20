@@ -9,11 +9,15 @@
 @import 'App/Styles/Components/HomePageStyledElements/full-blue-square.scss';
 @import 'App/Styles/Components/HomePageStyledElements/orange-framework.scss';
 @import 'App/Styles/Components/HomePageStyledElements/three-dimensions-cube.scss';
-@import 'App/Styles/Components/HomePageStyledElements/photographer.scss';
+@import 'App/Styles/Components/HomePageStyledElements/camera-wrapper.scss';
 @import 'App/Styles/Components/HomePageStyledElements/playing-music.scss';
 @import 'App/Styles/Components/HomePageStyledElements/ink-drip.scss';
 @import 'App/Styles/Components/HomePageStyledElements/skate.scss';
 @import 'App/Styles/Components/HomePageStyledElements/board-creator-input.scss';
+
+@import 'App/Styles/Components/MiniComponents/todo-ai-checkbox.scss';
+@import 'App/Styles/Components/MiniComponents/Confetti.scss';
+@import 'App/Styles/Components/MiniComponents/todo-ai-loader.scss';
 
 @import 'App/Styles/Components/SharedBoard/shared-board.scss';
 @import 'App/Styles/Components/SharedBoard/shared-todo.scss';

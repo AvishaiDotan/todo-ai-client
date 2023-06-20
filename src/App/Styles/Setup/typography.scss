@@ -3,7 +3,22 @@
     src: url('../Typography/LeagueSpartan/LeagueSpartan-ExtraBold.ttf');
 }
 
+@font-face {
+    font-family: LeagueSpartan-Medium;
+    src: url('../Typography/LeagueSpartan/LeagueSpartan-Medium.ttf');
+}
+
+@font-face {
+    font-family: LeagueSpartan-Light;
+    src: url('../Typography/LeagueSpartan/LeagueSpartan-Light.ttf');
+}
 
 .main-font-family {
     font-family: LeagueSpartan-ExtraBold;
+}
+.secondary-font-family {
+    font-family: LeagueSpartan-Medium;
+}
+.third-font-family {
+    font-family: LeagueSpartan-Light;
 }

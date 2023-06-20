@@ -1,13 +1,46 @@
 .nav-bar {
     height: 100px;
-    background-color: $primary-color;
     padding-inline: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    &.home {
+        background-color: $primary-color;
+        a {
+            color: white;
+            .orange {
+                color: $secondary-color;
+            }
+        }
+
+        .link-animation a {
+            background-image: linear-gradient(to right,
+            $secondary-color,
+            $secondary-color 50%,
+            white 50%);
+        }
+    }
+
+    &.boards {
+        background-color: $secondary-color;
+        a {
+            color: $black-color;
+            .orange {
+                color: white;
+            }
+        }
+
+        .link-animation a {
+            background-image: linear-gradient(to right,
+            $black-color,
+            $black-color 50%,
+            white 50%);
+        }
+    }
+
     a {
-        color: white;
+        
         font-size: 35px;
 
         .home-nav-link {

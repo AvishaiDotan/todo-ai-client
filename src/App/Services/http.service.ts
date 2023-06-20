@@ -1,9 +1,8 @@
 import Axios from 'axios'
 
+
 export const axios = Axios.create()
-const baseURL = import.meta.env.DEV
-  ? 'http://localhost:5065/api'
-  : 'http://todo-ai-server.us-east-1.elasticbeanstalk.com/api'
+const baseURL = 'http://todo-ai-server.us-east-1.elasticbeanstalk.com/api'
 
 export const httpService = {
   get<T>(endpoint: string, data = null) {

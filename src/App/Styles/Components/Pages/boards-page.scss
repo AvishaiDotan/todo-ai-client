@@ -1,4 +1,90 @@
 .boards-page {
     height: calc(100vh - 100px);
     background-color: #f2be4b;
+    display: grid; 
+    grid-template-columns: 60px 3fr 1fr 60px; 
+    grid-template-rows: 120px 1fr; 
+    grid-template-areas: 
+        ". header . ."
+        ". table actions ."; 
+      
+
+
+    h3 { 
+        grid-area: header;
+        align-self: end;
+        margin-inline-start: 60px;
+        font-size: 50px;
+        color: $black-color;
+    }
+    .table-wrapper { 
+        grid-area: table; 
+        display: flex;
+        flex-direction: column;
+
+        .table {
+            margin: 60px;
+            height: 100%;
+            border: 4px solid $black-color;
+
+            .grid-layout {
+                display: grid;
+                grid-template-columns: 5fr 1fr;
+                height: 60px;
+                align-items: center;
+                border-block-end: 4px solid $black-color;
+
+                > *:first-child {
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    margin-inline-start: 40px;
+                    border-inline-end: 4px solid $black-color;
+                }
+
+                :nth-child(2) {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            .headers {
+                background-color: $primary-color;
+                > * {
+                    font-size: 20px;
+                    color: white;
+                }
+            }
+
+            .item {
+                background-color: $grey-color;
+                > * {
+                    font-size: 15px;
+                    color: $black-color;
+                }
+            }
+        }
+
+    }
+    .actions-wrapper { 
+        grid-area: actions; 
+
+        .apply-status-to-all-wrapper .apply-status-to-all-container {
+            background-color: $forth-color;
+            height: 215px;
+
+            h4 {
+                padding: 30px;
+                font-size: 30px;
+            }
+        }
+
+        .checkbox-arrow-wrapper {
+            position: relative;
+            width: 142px;
+            height: 117px;
+            bottom: 47px;
+        }
+    }
 }
