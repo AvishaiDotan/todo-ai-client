@@ -12,7 +12,7 @@ axios.interceptors.request.use((req) => {
 axios.interceptors.response.use(
   (req) => req,
   (error: AxiosError<any>) => {
-    if (!error.response?.data) return
+    if (!error.response?.data) return Promise.reject(error)
 
     error.message = error.response.data?.message || error.message
     if (error.response.data?.errors)
