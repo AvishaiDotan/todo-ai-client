@@ -1,4 +1,5 @@
 import { ACTIONS } from '../Actions/account.actions'
+import { IUser } from '@/Types'
 
 export interface IAccountState {
   loggedUser: IUser | null

@@ -1,4 +1,5 @@
 import { ACTIONS } from '../Actions/boards.actions'
+import { Board } from '@/Types'
 
 export interface IBoardState {
   boards: Board[]

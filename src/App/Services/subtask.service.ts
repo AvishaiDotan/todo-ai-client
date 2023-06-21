@@ -1,4 +1,5 @@
 import { httpService } from './http.service'
+import { SubTask } from '@/Types'
 
 function getCompletedTasks() {
   return httpService.get<SubTask[]>(`/subtasks/completed`)
