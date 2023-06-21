@@ -46,7 +46,7 @@ function getBoard(id: number) {
 
 function getBoardExcel(id: number) {
   if (!utilService.isLoggedIn()) throw new Error('You must be logged in')
-  return httpService.get<Board>(`/boards/${id}/excel`)
+  return httpService.get<string>(`/boards/${id}/excel`, null, { responseType: 'arraybuffer' })
 }
 
 function clearLocalDb() {
