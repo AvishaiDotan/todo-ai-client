@@ -7,7 +7,6 @@ import { useParams  } from "react-router-dom";
 import TodoAICheckbox from '@/Components/MiniComponents/TodoAICheckbox'
 
 import arrow from '../../../src/App/Assets/arrow.png'
-import { type } from 'os'
 import TableHeaderTitle from './TableComponents/TableHeaderTitle';
 import TableHeaders from './TableComponents/TableHeaders';
 import TableBody from './TableComponents/TableBody';
@@ -31,12 +30,13 @@ interface IBoardsProps {
 export default function Boards({title, dataToRenderType}: IBoardsProps) {
 
 	const [dataToRender, setDataToRender] = useState<DataToRender>([])
-	const {boardId, todoId} = useParams<ComponentParams>()
+	const params = useParams<ComponentParams>()
+	const {boardId, todoId} = params;
 
 	useEffect(() => {
 		if (!boardId && !todoId && dataToRenderType == DataToRenderTypeEnum.board)
 			loadBoards()
-	}, [])
+	}, [params])
 
 	const loadBoards = async () => {
 		var boards = await boardService.getBoards();

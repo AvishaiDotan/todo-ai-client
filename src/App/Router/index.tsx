@@ -30,10 +30,10 @@ export const router = createBrowserRouter([
         path: 'boards',
         element: <Boards dataToRenderType={DataToRenderTypeEnum.board} title='Boards'/>,
       },
-      // {
-      //   path: 'boards/:boardId',
-      //   element: <Boards title='Todo'/>,
-      // },
+      {
+        path: 'boards/:boardId',
+        element: <Boards dataToRenderType={DataToRenderTypeEnum.todo} title='Todos'/>,
+      },
       // {
       //   path: 'boards/:boardId/Todo/:todoId',
       //   element: <Boards title='Subtasks'/>,

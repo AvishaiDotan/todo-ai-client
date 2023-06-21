@@ -1,4 +1,5 @@
 import { DataToRender, DataToRenderTypeEnum, DataToRenderType, Board } from "@/Types"
+import { Link } from "react-router-dom"
 
 interface ITableBodyProps {
     dataToRender: DataToRender,
@@ -17,15 +18,22 @@ export default function TableBody(props: ITableBodyProps) {
         return true
 	}
 
+    const getHref = (item: DataToRenderType): string => {
+		return `${item .id}`;
+	}
+
+    
+
     return (
         <div className="body">
             {props.dataToRender.map(i =>
-                <div className='item grid-layout'>
+                <div key={i.id} className='item grid-layout'>
+                    {
+                        (props.dataToRenderType == DataToRenderTypeEnum.board) ? <Link to={getHref(i)}>{getPropName(i)}</Link> : <div>{getPropName(i)}</div>
+                    }
+
                     <div>
-                        {getPropName(i)}
-                    </div>
-                    <div>
-                        {<input type='checkbox' checked={isDone(i)}></input>}
+                        {<input type='checkbox' checked={isDone(i)} onChange={() => {}}></input>}
                     </div>
                 </div>)}
         </div>
