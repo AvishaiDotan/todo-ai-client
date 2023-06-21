@@ -34,10 +34,10 @@ export const router = createBrowserRouter([
         path: 'boards/:boardId',
         element: <Boards dataToRenderType={DataToRenderTypeEnum.todo} title='Todos'/>,
       },
-      // {
-      //   path: 'boards/:boardId/Todo/:todoId',
-      //   element: <Boards title='Subtasks'/>,
-      // },
+      {
+        path: 'boards/:boardId/todos/:todoId',
+        element: <Boards dataToRenderType={DataToRenderTypeEnum.subTask} title='Subtasks' />,
+      },
       {
         path: 'login',
         element: <AuthPage isLoginPage={true} />,
