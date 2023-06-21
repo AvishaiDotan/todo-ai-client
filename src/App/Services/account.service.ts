@@ -2,6 +2,12 @@ import { AxiosError } from 'axios'
 
 import { storageService } from './storage.service'
 import { httpService, axios } from './http.service'
+import {
+  ILoginCredentials,
+  ILoginResult,
+  IRegisterPayload,
+  IUser,
+} from '@/Types'
 
 // Attach Authorization header with token
 axios.interceptors.request.use((req) => {

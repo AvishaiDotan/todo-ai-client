@@ -1,3 +1,5 @@
+import { SubTask } from '@/Types'
+
 interface ISharedSubTaskProps {
   subtask: SubTask
   onChange: (value: boolean, subtask: SubTask) => void

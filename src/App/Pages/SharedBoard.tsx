@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ReactSortable, Sortable, SortableEvent } from 'react-sortablejs'
+import { ReactSortable } from 'react-sortablejs'
 import { debounce } from 'lodash'
 
 import { boardService } from '@/Services/board.service'
 import { subtaskService } from '@/Services/subtask.service'
 import { todoService } from '@/Services/todo.service'
+import { Board, SubTask, Todo } from '@/Types'
 
 import SharedTodo from '@/Components/SharedBoard/SharedTodo'
 

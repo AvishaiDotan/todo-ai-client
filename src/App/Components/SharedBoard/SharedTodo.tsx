@@ -6,6 +6,7 @@ import {
 } from 'react-icons/tb'
 
 import SharedSubTask from './SharedSubTask'
+import { SubTask, Todo } from '@/Types'
 
 interface ISharedTodoProps {
   todo: Todo

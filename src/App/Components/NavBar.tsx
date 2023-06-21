@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { BsPower } from 'react-icons/bs'
+import { LuLogOut } from 'react-icons/lu'
 import { VscLoading } from 'react-icons/vsc'
 
 import HomeNavLink from './HomeNavLink'
@@ -35,19 +35,19 @@ export default function NavBar() {
       const lastNameInitial = names[1][0].toUpperCase()
 
       return (
-        <>
-          <a className='active no-underline'>{`${firstNameInitial}.${lastNameInitial}`}</a>
+        <div className='flex gap-2'>
+          <span className='inline-block self-center text-primary bg-secondary rounded-full p-1 pt-[7px]'>{`${firstNameInitial}${lastNameInitial}`}</span>
           <button
             type='button'
             onClick={handleLogout}
-            className='shadow-2xl	transition duration-300 rounded p-1 self-center bg-red-500 text-white hover:text-red-500 hover:bg-stone-50'>
+            className='shadow-2xl	transition duration-300 rounded p-1 self-center bg-slate-700 bg-opacity-50 text-white hover:text-slate-700 hover:bg-stone-50'>
             {isLogginOut ? (
               <VscLoading className='text-2xl animate-spin fill-white-600' />
             ) : (
-              <BsPower className='text-2xl' />
+              <LuLogOut className='text-2xl' />
             )}
           </button>
-        </>
+        </div>
       )
     }
 

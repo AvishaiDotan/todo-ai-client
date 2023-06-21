@@ -1,9 +1,4 @@
-
-
 export default function HomeNavLink() {
-
-
-
   return (
     <div className='home-nav-link'>
       <h1>

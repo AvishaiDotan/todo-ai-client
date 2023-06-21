@@ -3,6 +3,7 @@ import { ThunkAction } from 'redux-thunk'
 
 import { accountService } from '@/Services/account.service'
 import { IAppState } from '@/Store'
+import { ILoginCredentials, IRegisterPayload } from '@/Types'
 
 export const ACTIONS = {
   SET_LOGGED_USER: 'SET_LOGGED_USER',

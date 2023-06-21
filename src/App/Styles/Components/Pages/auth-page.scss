@@ -5,4 +5,33 @@
   justify-content: center;
   align-items: center;
   padding: 10px 25px;
+  background-color: $grey-color;
+}
+
+.submit-auth-btn {
+  --bg-h: 100%;
+
+  color: $primary-color;
+  background-color: white !important;
+  background: linear-gradient(0deg, $primary-color, $primary-color) no-repeat
+    right bottom / 0 var(--bg-h);
+  transition: background-size 350ms ease-in-out;
+
+  &.login {
+    color: $secondary-color;
+    background: linear-gradient(0deg, $secondary-color, $secondary-color)
+      no-repeat right bottom / 0 var(--bg-h);
+  }
+
+  &:hover:not(:disabled) {
+    color: white !important;
+    background-size: 100% var(--bg-h);
+    background-position-x: left;
+  }
+
+  &:disabled {
+    color: white !important;
+    background-size: 100% var(--bg-h);
+    background-position-x: left;
+  }
 }

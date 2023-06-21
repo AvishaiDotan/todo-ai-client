@@ -1,6 +1,7 @@
 import { httpService } from './http.service'
 import { storageService } from './storage.service'
 import { utilService } from './util.service'
+import { Board } from '@/Types'
 
 const LOCAL_BOARDS_DB = 'boards_DB'
 export var gBoards =
