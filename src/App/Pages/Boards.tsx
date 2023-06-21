@@ -57,10 +57,6 @@ export default function Boards({title, dataToRenderType}: IBoardsProps) {
 								<TodoAiLoader />
 						}
 					</div>
-
-					
-
-
 				</section>
 			</section>
 

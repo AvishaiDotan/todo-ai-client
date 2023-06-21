@@ -1,7 +1,7 @@
 import Axios from 'axios'
-
+const isFromAvishai = true
 export const axios = Axios.create()
-const baseURL = import.meta.env.DEV
+const baseURL = import.meta.env.DEV && !isFromAvishai
   ? 'http://localhost:5065/api'
   : 'http://todo-ai-server.us-east-1.elasticbeanstalk.com/api'
 
