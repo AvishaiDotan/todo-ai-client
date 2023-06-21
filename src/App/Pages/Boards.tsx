@@ -11,6 +11,7 @@ import TableHeaderTitle from './TableComponents/TableHeaderTitle'
 import TableHeaders from './TableComponents/TableHeaders'
 import TableBody from './TableComponents/TableBody'
 import TodoAiLoader from '@/Components/MiniComponents/TodoAiLoader'
+import DownloadBtn from '@/Components/MiniComponents/DownloadBtn'
 
 type ComponentParams = {
   boardId?: string
@@ -24,6 +25,7 @@ interface IBoardsProps {
 
 export default function Boards({ title, dataToRenderType }: IBoardsProps) {
   const [dataToRender, setDataToRender] = useState<DataToRender>([])
+  const [isDownloading, setIsDownloading] = useState(false)
   const params = useParams<ComponentParams>()
 
   useEffect(() => {
@@ -48,6 +50,37 @@ export default function Boards({ title, dataToRenderType }: IBoardsProps) {
     } else if (boardId && !todoId) {
       const board = content.find((b) => b.id === +boardId)
       board && setDataToRender(board.todos)
+    }
+  }
+
+  const isSingleBoardPage = params.boardId && !params?.todoId
+
+  const handleExcelDownload = async () => {
+    try {
+      setIsDownloading(true)
+
+      // Convert result to Blob
+      const binaryData = await boardService.getBoardExcel(+params.boardId!)
+      const reader = new FileReader()
+      const blob = new Blob([binaryData], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      })
+
+      // Prepare a link to download
+      const elDownload = document.createElement('a')
+      elDownload.setAttribute('download', `Board-${params.boardId}.xlsx`)
+
+      // Start readAsDataURL then set it to the download link url and make a click
+      reader.readAsDataURL(blob)
+      reader.onloadend = function () {
+        elDownload.href = reader.result as string
+        elDownload.click()
+
+        setIsDownloading(false)
+      }
+    } catch (error) {
+      console.log('Failed to download', error)
+      setIsDownloading(false)
     }
   }
 
@@ -81,6 +114,14 @@ export default function Boards({ title, dataToRenderType }: IBoardsProps) {
               </div>
             </div>
           </CameraWrapper>
+
+          {isSingleBoardPage && (
+            <DownloadBtn
+              loading={isDownloading}
+              onClick={handleExcelDownload}
+              text='Download Excel'
+            />
+          )}
         </div>
 
         <div className='description'></div>
