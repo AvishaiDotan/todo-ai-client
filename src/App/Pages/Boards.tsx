@@ -31,8 +31,6 @@ export default function Boards({ title, dataToRenderType }: IBoardsProps) {
   }, [params])
 
   const loadContent = async () => {
-	console.log('HERE');
-	
     let content: DataToRender = await boardService.getBoards()
 
     const { boardId, todoId } = params

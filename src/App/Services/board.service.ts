@@ -28,7 +28,7 @@ function createManyBoards(boards: Board[]) {
 }
 
 function getBoards() {
-  if (!utilService.isLoggedIn()) return Promise.resolve(gBoards)
+  // if (!utilService.isLoggedIn()) return Promise.resolve(gBoards)
 
   return httpService.get<Board[]>('/boards')
 }

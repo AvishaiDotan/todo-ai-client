@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
         element: <Boards dataToRenderType={DataToRenderTypeEnum.todo} title='Todos'/>,
       },
       {
-        path: 'boards/:boardId/todos/:todoId',
+        path: 'boards/:boardId/todo/:todoId',
         element: <Boards dataToRenderType={DataToRenderTypeEnum.subTask} title='Subtasks' />,
       },
       {

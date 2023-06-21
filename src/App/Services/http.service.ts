@@ -1,5 +1,5 @@
 import Axios from 'axios'
-const isFromAvishai = false
+const isFromAvishai = true
 export const axios = Axios.create()
 const baseURL = import.meta.env.DEV && !isFromAvishai
   ? 'http://localhost:5065/api'
