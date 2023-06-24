@@ -104,7 +104,7 @@ export default function Boards({ title, dataToRenderType }: IBoardsProps) {
       </section>
 
       <section className='actions-wrapper'>
-        <div className='apply-status-to-all-wrapper'>
+        <div className='apply-status-to-all-wrapper w-full'>
           <CameraWrapper isFromHomePage={false}>
             <div className='apply-status-to-all-container'>
               <h4 className='third-font-family'>Status:</h4>
@@ -114,15 +114,15 @@ export default function Boards({ title, dataToRenderType }: IBoardsProps) {
               </div>
             </div>
           </CameraWrapper>
-
-          {isSingleBoardPage && (
-            <DownloadBtn
-              loading={isDownloading}
-              onClick={handleExcelDownload}
-              text='Download Excel'
-            />
-          )}
         </div>
+
+        {isSingleBoardPage && (
+          <DownloadBtn
+            loading={isDownloading}
+            onClick={handleExcelDownload}
+            text='Download Excel'
+          />
+        )}
 
         <div className='description'></div>
 
