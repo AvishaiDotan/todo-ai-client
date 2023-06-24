@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import CameraWrapper from '@/Components/HomePageStyledElements/CameraWrapper'
 import { boardService } from '@/Services/board.service'
@@ -27,6 +27,8 @@ export default function Boards({ title, dataToRenderType }: IBoardsProps) {
   const [dataToRender, setDataToRender] = useState<DataToRender>([])
   const [isDownloading, setIsDownloading] = useState(false)
   const params = useParams<ComponentParams>()
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     loadContent()
@@ -84,6 +86,18 @@ export default function Boards({ title, dataToRenderType }: IBoardsProps) {
     }
   }
 
+  const getBackLabel = useCallback(() => {
+    switch (dataToRenderType) {
+      case DataToRenderTypeEnum.todo:
+        return 'Back to Boards Page'
+      case DataToRenderTypeEnum.subTask:
+        return 'Back to Todos Page'
+
+      default:
+        return ''
+    }
+  }, [dataToRenderType])
+
   return (
     <section className='boards-page'>
       <TableHeaderTitle headerStr={title} />
@@ -125,6 +139,12 @@ export default function Boards({ title, dataToRenderType }: IBoardsProps) {
         )}
 
         <div className='description'></div>
+
+        <div className='pb-[60px] flex justify-end w-full'>
+          <span className='underline cursor-pointer' onClick={() => navigate(-1)}>
+            {getBackLabel()}
+          </span>
+        </div>
 
         {/* {(props.isBoards) && <div>Back to Boards Page</div>} */}
       </section>
