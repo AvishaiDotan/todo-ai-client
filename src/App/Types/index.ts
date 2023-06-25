@@ -1,5 +1,6 @@
 interface BaseEntity {
   id: number
+  order: number
 }
 
 export interface Board extends BaseEntity {
@@ -11,12 +12,6 @@ export interface Todo extends BaseEntity {
   title: string
   subTasks: SubTask[]
   boardId: number
-  order: number
-}
-
-export type TodoOrderSave = {
-  boardId: number
-  todos: Pick<Todo, 'id' | 'order'>[]
 }
 
 export interface SubTask extends BaseEntity {
@@ -25,7 +20,21 @@ export interface SubTask extends BaseEntity {
   todoId: number
 }
 
-export interface IUser extends BaseEntity {
+export type BoardOrderSave = {
+  boards: Pick<Board, 'id' | 'order'>[]
+}
+
+export type TodoOrderSave = {
+  boardId: number
+  todos: Pick<Todo, 'id' | 'order'>[]
+}
+
+export type SubTaskOrderSave = {
+  todoId: number
+  subTasks: Pick<SubTask, 'id' | 'order'>[]
+}
+
+export interface IUser extends Omit<BaseEntity, 'order'> {
   email: string
   fullName: string
 }

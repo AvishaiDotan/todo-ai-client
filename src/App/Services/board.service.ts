@@ -1,7 +1,7 @@
 import { httpService } from './http.service'
 import { storageService } from './storage.service'
 import { utilService } from './util.service'
-import { Board } from '@/Types'
+import { Board, BoardOrderSave } from '@/Types'
 
 const LOCAL_BOARDS_DB = 'boards_DB'
 export var gBoards =
@@ -27,6 +27,18 @@ function createManyBoards(boards: Board[]) {
   return httpService.post<Board[]>('/boards/many', { boards })
 }
 
+function updateBoard(board: Board) {
+  return httpService.put<Board>(`/boards/${board.id}/status`, board)
+}
+
+function updateBoardStatus(boardId: number, status: boolean) {
+  return httpService.put(`/boards/${boardId}/status`, { status })
+}
+
+function deleteBoard(boardId: number) {
+  return httpService.delete(`/boards/${boardId}`)
+}
+
 function getBoards() {
   if (!utilService.isLoggedIn()) return Promise.resolve(gBoards)
 
@@ -46,7 +58,9 @@ function getBoard(id: number) {
 
 function getBoardExcel(id: number) {
   if (!utilService.isLoggedIn()) throw new Error('You must be logged in')
-  return httpService.get<string>(`/boards/${id}/excel`, null, { responseType: 'arraybuffer' })
+  return httpService.get<string>(`/boards/${id}/excel`, null, {
+    responseType: 'arraybuffer',
+  })
 }
 
 function clearLocalDb() {
@@ -77,6 +91,10 @@ function _getBoardWithId(board: Board) {
   return board
 }
 
+function saveBoardsOrder(orderedBoards: BoardOrderSave) {
+  return httpService.post(`/boards/orders`, orderedBoards)
+}
+
 export const boardService = {
   createBoard,
   createManyBoards,
@@ -84,4 +102,8 @@ export const boardService = {
   getBoard,
   getBoardExcel,
   clearLocalDb,
+  updateBoard,
+  updateBoardStatus,
+  deleteBoard,
+  saveBoardsOrder,
 }
