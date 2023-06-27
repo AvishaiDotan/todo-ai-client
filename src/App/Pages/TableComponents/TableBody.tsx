@@ -1,5 +1,6 @@
 import { DataToRender, DataToRenderTypeEnum, DataToRenderType, Board, Todo, SubTask } from "@/Types"
 import { Link } from "react-router-dom"
+import DataToRenderItem from "./DataToRenderItem"
 
 interface ITableBodyProps {
     dataToRender: DataToRender,
@@ -7,24 +8,17 @@ interface ITableBodyProps {
 }
 
 export default function TableBody(props: ITableBodyProps) {
-    const getPropName = (item: DataToRenderType): string => {
-        if (props.dataToRenderType == DataToRenderTypeEnum.board) return (item as Board).name
-        else if (props.dataToRenderType == DataToRenderTypeEnum.todo) return (item as Todo).title
-        return (item as SubTask).text
-    }
+
 
     const isDone = (item: DataToRenderType): boolean => {
         if (props.dataToRenderType == DataToRenderTypeEnum.board)
-            return (item as Board).todos.every(t => t.subTasks.every(st => st.isDone))
-        return true
+            return (item as Board)?.todos?.every(t => t.subTasks.every(st => st.isDone))
+        else if (props.dataToRenderType == DataToRenderTypeEnum.todo)
+            return (item as Todo)?.subTasks?.every(st => st.isDone)
+        else return (item as SubTask).isDone;
     }
 
-    const getHref = (item: DataToRenderType): string => {
-        if (props.dataToRenderType == DataToRenderTypeEnum.board)
-            return `${item.id}`;
-        else if (props.dataToRenderType == DataToRenderTypeEnum.todo)
-            return `todo/${item.id}`;
-    }
+
 
 
 
@@ -33,7 +27,7 @@ export default function TableBody(props: ITableBodyProps) {
             {props.dataToRender.map(i =>
                 <div key={i.id} className='item grid-layout'>
                     {
-                        (props.dataToRenderType !== DataToRenderTypeEnum.subTask) ? <Link to={getHref(i)}>{getPropName(i)}</Link> : <div>{getPropName(i)}</div>
+                        <DataToRenderItem item={i} dataToRenderType={props.dataToRenderType} />
                     }
 
                     <div>

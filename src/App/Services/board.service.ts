@@ -15,7 +15,6 @@ function createBoard(prompt: string) {
     if (!utilService.isLoggedIn()) {
       const boardCopy = utilService.deepClone(board)
       gBoards.push(_getBoardWithId(boardCopy))
-      console.log('boardCopy', boardCopy)
       storageService.saveToStorage(LOCAL_BOARDS_DB, gBoards)
     }
 
@@ -28,7 +27,7 @@ function createManyBoards(boards: Board[]) {
 }
 
 function getBoards() {
-  // if (!utilService.isLoggedIn()) return Promise.resolve(gBoards)
+  if (!utilService.isLoggedIn()) return Promise.resolve(gBoards)
 
   return httpService.get<Board[]>('/boards')
 }

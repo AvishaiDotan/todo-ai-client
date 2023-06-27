@@ -7,8 +7,8 @@ const PageRouteHook = (): PageRoute  => {
 	const location = useLocation();
 	const [pageEnum, setPageEnum] = useState(PageRoute.home);
 
-	useEffect(() => {
 
+	useEffect(() => {
 		if (location.pathname === '/boards') {
 			setPageEnum(PageRoute.boards);
 		} else if (location.pathname === '/home' && !location.pathname.includes("/todos")) {

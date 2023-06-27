@@ -1,4 +1,4 @@
-export default function TableHeaders() {
+export default function TableHeaders() {  
     const headers = ["Title", 'Status']
     return (
         <div className="headers grid-layout">

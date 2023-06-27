@@ -1,0 +1,16 @@
+.data-to-render-item {
+    display: flex;
+    gap: 10px;
+
+
+    &:hover svg  {
+        visibility: visible;
+    }
+
+    svg {
+        visibility: hidden;
+        cursor: pointer;
+    }
+
+
+}
