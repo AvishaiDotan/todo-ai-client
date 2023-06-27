@@ -1,7 +1,9 @@
 .camera-wrapper {
-    width: 250px;
+    width: 100%;
     border: 4px solid $black-color;
     border-radius: 2px;
+    aspect-ratio: 1/1;
+    max-height: 250px;
 
     &.camera {
         position: absolute;

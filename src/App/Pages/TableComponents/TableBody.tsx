@@ -1,10 +1,11 @@
-import { DataToRender, DataToRenderTypeEnum, DataToRenderType, Board, Todo, SubTask } from "@/Types"
+import { DataToRender, DataToRenderTypeEnum, DataToRenderType, Board, Todo, SubTask, IBoardCrudActions } from "@/Types"
 import { Link } from "react-router-dom"
 import DataToRenderItem from "./DataToRenderItem"
 
 interface ITableBodyProps {
     dataToRender: DataToRender,
     dataToRenderType: DataToRenderTypeEnum
+    boardCrudActions: IBoardCrudActions
 }
 
 export default function TableBody(props: ITableBodyProps) {
@@ -27,7 +28,7 @@ export default function TableBody(props: ITableBodyProps) {
             {props.dataToRender.map(i =>
                 <div key={i.id} className='item grid-layout'>
                     {
-                        <DataToRenderItem item={i} dataToRenderType={props.dataToRenderType} />
+                        <DataToRenderItem boardCrudActions={props.boardCrudActions} item={i} dataToRenderType={props.dataToRenderType} />
                     }
 
                     <div>

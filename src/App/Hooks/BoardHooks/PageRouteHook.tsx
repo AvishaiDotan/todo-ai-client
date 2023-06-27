@@ -17,6 +17,10 @@ const PageRouteHook = (): PageRoute  => {
 			setPageEnum(PageRoute.completed);
 		} else if (location.pathname.includes("/todos"))  {
 			setPageEnum(PageRoute.todos);
+		} else if (location.pathname.includes("/login"))  {
+			setPageEnum(PageRoute.login);
+		} else if (location.pathname.includes("/signup"))  {
+			setPageEnum(PageRoute.signup);
 		}
 	}, [location]);
 

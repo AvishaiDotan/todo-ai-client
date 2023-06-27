@@ -1,32 +1,39 @@
-import Axios from 'axios'
+import Axios, { AxiosRequestConfig } from 'axios'
 const isFromAvishai = true
 export const axios = Axios.create()
-const baseURL = import.meta.env.DEV && !isFromAvishai
-  ? 'http://localhost:5065/api'
-  : 'http://todo-ai-server.us-east-1.elasticbeanstalk.com/api'
+const baseURL =
+  import.meta.env.DEV && !isFromAvishai
+    ? 'http://localhost:5065/api'
+    : 'http://todo-ai-server.us-east-1.elasticbeanstalk.com/api'
 
 export const httpService = {
-  get<T>(endpoint: string, data = null) {
-    return ajax<T>(endpoint, 'GET', data)
+  get<T>(endpoint: string, data = null, options?: AxiosRequestConfig) {
+    return ajax<T>(endpoint, 'GET', data, options)
   },
-  post<T>(endpoint: string, data: any) {
-    return ajax<T>(endpoint, 'POST', data)
+  post<T>(endpoint: string, data: any, options?: AxiosRequestConfig) {
+    return ajax<T>(endpoint, 'POST', data, options)
   },
-  put<T>(endpoint: string, data: any) {
-    return ajax<T>(endpoint, 'PUT', data)
+  put<T>(endpoint: string, data: any, options?: AxiosRequestConfig) {
+    return ajax<T>(endpoint, 'PUT', data, options)
   },
-  delete(endpoint: string, data = null) {
-    return ajax(endpoint, 'DELETE', data)
+  delete(endpoint: string, data = null, options?: AxiosRequestConfig) {
+    return ajax(endpoint, 'DELETE', data, options)
   },
 }
 
-async function ajax<T>(endpoint: string, method = 'GET', data = null) {
+async function ajax<T>(
+  endpoint: string,
+  method = 'GET',
+  data = null,
+  options?: AxiosRequestConfig
+) {
   try {
     const res = await axios<T>({
       url: `${baseURL}${endpoint}`,
       method,
       data,
       params: method === 'GET' ? data : null,
+      ...options,
     })
 
     return res.data

@@ -69,10 +69,14 @@
     }
     .actions-wrapper { 
         grid-area: actions; 
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
 
         .apply-status-to-all-wrapper .apply-status-to-all-container {
             background-color: $forth-color;
-            height: 215px;
+            height: 100%;
 
             h4 {
                 padding: 30px;

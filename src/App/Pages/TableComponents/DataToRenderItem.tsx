@@ -1,17 +1,19 @@
-import { DataToRenderTypeEnum, DataToRenderType, SubTask, Board, Todo } from "@/Types"
+import { DataToRenderTypeEnum, DataToRenderType, SubTask, Board, Todo, IBoardCrudActions } from "@/Types"
 import { Link } from "react-router-dom"
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { BiPencil } from 'react-icons/bi';
-
+import { debounce } from 'lodash'
+import { log } from "console";
 
 
 
 interface IDataToRenderItemProps {
     dataToRenderType: DataToRenderTypeEnum,
     item: DataToRenderType,
+    boardCrudActions: IBoardCrudActions
 }
 
-export default function DataToRenderItem({ dataToRenderType, item }: IDataToRenderItemProps) {
+export default function DataToRenderItem({ dataToRenderType, item, boardCrudActions: actions }: IDataToRenderItemProps) {
 
     const [isEditing, setIsEditing] = useState(false)
     const [newName, setNewName] = useState("")
@@ -20,7 +22,7 @@ export default function DataToRenderItem({ dataToRenderType, item }: IDataToRend
         if (isEditing)
             setFocus()
     }, [isEditing])
-    
+
 
     const subTaskRef = useRef<HTMLInputElement>(null)
     const otherRef = useRef<HTMLInputElement>(null)
@@ -38,7 +40,7 @@ export default function DataToRenderItem({ dataToRenderType, item }: IDataToRend
         return `todo/${item.id}`;
     }
 
-    const setEditingMode = (ev: Event) =>  {
+    const setEditingMode = (ev: Event) => {
         ev.stopPropagation()
         ev.preventDefault()
         setIsEditing(true)
@@ -51,16 +53,33 @@ export default function DataToRenderItem({ dataToRenderType, item }: IDataToRend
 
         setNewName(newName);
     }
+    
+    useEffect(() => {
+        debouncedRenameItem(item as any)
+
+    }, [newName])
+
+    const getUpdateAction = (item: DataToRenderType) => {
+        console.log(dataToRenderType);
+        
+        if (dataToRenderType === DataToRenderTypeEnum.board) return actions.onUpdateBoard(item as Board)
+        else if (dataToRenderType === DataToRenderTypeEnum.todo) return actions.onUpdateTodo(item as Todo)
+        return actions.onUpdateSubTask(item as SubTask)
+    }
+    
+    const debouncedRenameItem = useCallback(debounce(getUpdateAction, 1000), [])
+
+     
 
     const setViewMode = () => {
         setIsEditing(false)
     }
 
     const setFocus = () => {
-        
-        if (dataToRenderType === DataToRenderTypeEnum.subTask) 
+
+        if (dataToRenderType === DataToRenderTypeEnum.subTask)
             subTaskRef.current?.focus()
-        else{
+        else {
             otherRef.current?.focus()
         }
     }
@@ -72,26 +91,35 @@ export default function DataToRenderItem({ dataToRenderType, item }: IDataToRend
         (dataToRenderType !== DataToRenderTypeEnum.subTask) ?
             (!isEditing) ?
                 <div className="data-to-render-item">
-                    <Link to={getHref(item)}> 
+                    <Link to={getHref(item)}>
                         <div >
                             <span>
                                 {getPropName(item)}
                             </span>
                         </div>
-                    </Link> 
-                    <BiPencil onClick={setEditingMode}/>
+                    </Link>
+                    <BiPencil onClick={setEditingMode} />
                 </div>
                 :
-                <input ref={otherRef} className="outline-0 bg-transparent" value={getPropName(item)} onChange={(ev) => renameItem(ev.target.value)} onBlur={setViewMode}/> 
+                <input 
+                    ref={otherRef} 
+                    className="outline-0 bg-transparent" 
+                    value={getPropName(item)} 
+                    onChange={(ev) => renameItem(ev.target.value)} 
+                    onBlur={setViewMode} />
+            :
+            (!isEditing) ?
+                <div className="data-to-render-item">
+                    <span>
+                        {getPropName(item)}
+                    </span>
+                    <BiPencil onClick={setEditingMode} />
+                </div>
                 :
-                (!isEditing) ?
-                    <div className="data-to-render-item">
-                        <span>
-                            {getPropName(item)}
-                        </span>
-                        <BiPencil onClick={setEditingMode} />
-                    </div> 
-                    :
-                    <input ref={subTaskRef} className="outline-0 bg-transparent" value={getPropName(item)} onChange={(ev) => renameItem(ev.target.value)} onBlur={setViewMode}/>  
+                <input 
+                    ref={subTaskRef} 
+                    className="outline-0 bg-transparent" 
+                    value={getPropName(item)} 
+                    onChange={(ev) => renameItem(ev.target.value)} onBlur={setViewMode} />
     )
 }
