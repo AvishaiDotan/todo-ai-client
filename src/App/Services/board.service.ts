@@ -55,11 +55,33 @@ function getBoard(id: number) {
   return httpService.get<Board>(`/boards/${id}`)
 }
 
-function getBoardExcel(id: number) {
+async function downloadBoardExcel(boardId: number, fileName: string) {
   if (!utilService.isLoggedIn()) throw new Error('You must be logged in')
-  return httpService.get<string>(`/boards/${id}/excel`, null, {
-    responseType: 'arraybuffer',
+
+  const binaryData = await httpService.get<string>(
+    `/boards/${boardId}/excel`,
+    null,
+    {
+      responseType: 'arraybuffer',
+    }
+  )
+
+  // Convert result to Blob
+  const reader = new FileReader()
+  const blob = new Blob([binaryData], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   })
+
+  // Prepare a link to download
+  const elDownload = document.createElement('a')
+  elDownload.setAttribute('download', `${fileName}.xlsx`)
+
+  // Start readAsDataURL then set it to the download link url and make a click
+  reader.readAsDataURL(blob)
+  reader.onloadend = function () {
+    elDownload.href = reader.result as string
+    elDownload.click()
+  }
 }
 
 function clearLocalDb() {
@@ -99,7 +121,7 @@ export const boardService = {
   createManyBoards,
   getBoards,
   getBoard,
-  getBoardExcel,
+  downloadBoardExcel,
   clearLocalDb,
   updateBoard,
   updateBoardStatus,
