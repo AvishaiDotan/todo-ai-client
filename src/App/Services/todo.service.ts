@@ -9,7 +9,7 @@ function updateTodo(todo: Todo) {
   return httpService.put(`/todos/${todo.id}`, todo)
 }
 
-function updateTodoStatus(todoId: number, status: boolean) {
+function updateTodoStatus(todoId: number, status: boolean): Promise<any> {
   return httpService.put(`/todos/${todoId}/status`, { status })
 }
 

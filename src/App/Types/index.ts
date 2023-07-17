@@ -60,6 +60,15 @@ export enum PageRoute {
   todos = 'todos',
   completed = 'completed',
   shared = 'shared',
+  signup = 'signup',
+  login = 'login',
+}
+
+
+export interface IBoardCrudActions {
+	onUpdateBoard: (board: Board) => Promise<Board>
+  onUpdateTodo: (todo: Todo) => Promise<Todo>
+  onUpdateSubTask: (subtask: SubTask) => Promise<SubTask>
 }
 
 export type DataToRender = Board[] | Todo[] | SubTask[]
