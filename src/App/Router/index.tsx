@@ -2,8 +2,8 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 
 import App from '@/App'
 import HomePage from '@/Pages/HomePage'
-import Completed from '@/Pages/Completed'
-import Boards from '@/Pages/Boards'
+import CompletedPage from '@/Pages/CompletedPage'
+import BoardsPage from '@/Pages/BoardsPage'
 import SharedBoard from '@/Pages/SharedBoard'
 import AuthPage from '@/Pages/AuthPage'
 
@@ -24,19 +24,19 @@ export const router = createBrowserRouter([
       },
       {
         path: 'completed',
-        element: <Completed />,
+        element: <CompletedPage />,
       },
       {
         path: 'boards',
-        element: <Boards dataToRenderType={DataToRenderTypeEnum.board} title='Boards'/>,
+        element: <BoardsPage dataToRenderType={DataToRenderTypeEnum.board} title='Boards'/>,
       },
       {
         path: 'boards/:boardId',
-        element: <Boards dataToRenderType={DataToRenderTypeEnum.todo} title='Todos'/>,
+        element: <BoardsPage dataToRenderType={DataToRenderTypeEnum.todo} title='Todos'/>,
       },
       {
         path: 'boards/:boardId/todo/:todoId',
-        element: <Boards dataToRenderType={DataToRenderTypeEnum.subTask} title='Subtasks' />,
+        element: <BoardsPage dataToRenderType={DataToRenderTypeEnum.subTask} title='Subtasks' />,
       },
       {
         path: 'login',

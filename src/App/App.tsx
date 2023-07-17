@@ -6,7 +6,7 @@ import NavBar from './Components/NavBar'
 import { useAppDispatch } from '@/Store'
 import { loadUser } from '@/Store/Actions/account.actions'
 
-function App() {
+export default function App() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -20,5 +20,3 @@ function App() {
     </main>
   )
 }
-
-export default App

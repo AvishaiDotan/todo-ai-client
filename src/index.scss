@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+// Setup
 @import './App/Styles/Setup/reset.css';
 @import './App/Styles/Setup/typography.scss';
 @import './App/Styles/Setup/pallet.scss';
 
+// Home components
 @import 'App/Styles/Components/HomePageStyledElements/full-blue-square.scss';
 @import 'App/Styles/Components/HomePageStyledElements/orange-framework.scss';
 @import 'App/Styles/Components/HomePageStyledElements/three-dimensions-cube.scss';
@@ -15,18 +17,21 @@
 @import 'App/Styles/Components/HomePageStyledElements/skate.scss';
 @import 'App/Styles/Components/HomePageStyledElements/board-creator-input.scss';
 
+// Mini components
 @import 'App/Styles/Components/MiniComponents/todo-ai-checkbox.scss';
-@import 'App/Styles/Components/MiniComponents/Confetti.scss';
 @import 'App/Styles/Components/MiniComponents/todo-ai-loader.scss';
 @import 'App/Styles/Components/MiniComponents/download-btn.scss';
 
+// Shared components
 @import 'App/Styles/Components/SharedBoard/shared-board.scss';
 @import 'App/Styles/Components/SharedBoard/shared-todo.scss';
 @import 'App/Styles/Components/SharedBoard/shared-subtask.scss';
+
+// Pages components
+@import 'App/Styles/Pages/home-page.scss';
+@import 'App/Styles/Pages/boards-page.scss';
+@import 'App/Styles/Pages/auth-page.scss';
+
+// Other styles
 @import 'App/Styles/Components/data-to-render-item.scss';
-
 @import 'App/Styles/Components/nav-bar.scss';
-
-@import 'App/Styles/Components/Pages/home-page.scss';
-@import 'App/Styles/Components/Pages/boards-page.scss';
-@import 'App/Styles/Components/Pages/auth-page.scss';
