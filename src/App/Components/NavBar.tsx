@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/Store'
 import { logoutUser } from '@/Store/Actions/account.actions'
 
 import { PageRoute } from '@/Types'
-import PageRouteHook from '../Hooks/BoardHooks/PageRouteHook'
+import usePageRouteHook from '@/Hooks/PageRoute'
 
 export default function NavBar() {
   const [isLogginOut, setIsLogginOut] = useState(false)
@@ -54,7 +54,7 @@ export default function NavBar() {
     return <NavLink to='/login'>Login</NavLink>
   }, [user, isLogginOut])
 
-  const route = PageRouteHook()
+  const route = usePageRouteHook()
   const getClassByRoute = (route: PageRoute) => {
     switch (route) {
       case PageRoute.boards:
