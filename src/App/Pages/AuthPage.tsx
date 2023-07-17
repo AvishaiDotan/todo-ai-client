@@ -160,7 +160,7 @@ export default function AuthPage(props: IAuthPageProps) {
         <button
           type='submit'
           disabled={isSubmitting}
-          className={`submit-auth-btn rounded-full px-3 py-2 text-lg border border-2 ${submitBtnClasses}`}>
+          className={`submit-auth-btn rounded-full px-3 py-2 text-lg border-2 ${submitBtnClasses}`}>
           {submitText}
         </button>
       </form>
