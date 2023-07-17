@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import arrow from '../../../src/App/Assets/arrow.png'
 import CameraWrapper from '@/Components/HomePageStyledElements/CameraWrapper'
@@ -7,24 +8,28 @@ import TableHeaders from '@/Components/TableComponents/TableHeaders'
 import TableBody from '@/Components/TableComponents/TableBody'
 import TodoAiLoader from '@/Components/MiniComponents/TodoAiLoader'
 import TodoAICheckbox from '@/Components/MiniComponents/TodoAICheckbox'
+import DownloadBtn from '@/Components/MiniComponents/DownloadBtn'
 
 import { boardService } from '@/Services/board.service'
+import { todoService } from '@/Services/todo.service'
 import { Board } from '@/Types'
 
-export default function BoardsPage() {
-  const [boards, setBoards] = useState<Board[]>([])
+export default function TodosPage() {
+  const [boardData, setBoardData] = useState<Board | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isDownloading, setIsDownloading] = useState(false)
+  const navigate = useNavigate()
+  const { boardId } = useParams()
 
   useEffect(() => {
-    loadContent()
+    boardId && loadContent()
   }, [])
 
   const loadContent = async () => {
     try {
       setIsLoading(true)
-      const boards = await boardService.getBoards()
-      setBoards(boards)
+      const boardData = await boardService.getBoard(+boardId!)
+      setBoardData(boardData)
     } catch (error) {
       console.log(error)
     } finally {
@@ -32,10 +37,10 @@ export default function BoardsPage() {
     }
   }
 
-  const handleExcelDownload = async (boardId: number, fileName: string) => {
+  const handleExcelDownload = async () => {
     try {
       setIsDownloading(true)
-      await boardService.downloadBoardExcel(boardId, fileName)
+      await boardService.downloadBoardExcel(+boardId!, boardData!.name)
     } catch (error) {
       console.log('Failed to download', error)
     } finally {
@@ -45,7 +50,7 @@ export default function BoardsPage() {
 
   return (
     <section className='boards-page'>
-      <TableHeaderTitle title={'Boards'} />
+      <TableHeaderTitle title={boardData?.name} />
       <section className='table-wrapper'>
         <section className='table'>
           <TableHeaders />
@@ -53,11 +58,11 @@ export default function BoardsPage() {
             {!isLoading ? (
               <span>TODO: RenderTable</span>
             ) : (
-              // <TableBody
-              //   boardCrudActions={boardCrudActions}
-              //   dataToRender={boards}
-              //   dataToRenderType={dataToRenderType}
-              // />
+              //   <TableBody
+              //     boardCrudActions={boardCrudActions}
+              //     dataToRender={boardData}
+              //     dataToRenderType={dataToRenderType}
+              //   />
               <TodoAiLoader />
             )}
           </div>
@@ -78,6 +83,22 @@ export default function BoardsPage() {
         </div>
 
         <div className='description'></div>
+
+        {
+          <DownloadBtn
+            loading={isDownloading}
+            onClick={handleExcelDownload}
+            text='Download Excel'
+          />
+        }
+
+        <div className='pb-[60px] flex justify-end w-full'>
+          <span
+            className='underline cursor-pointer'
+            onClick={() => navigate(-1)}>
+            Go back to boards
+          </span>
+        </div>
       </section>
     </section>
   )
