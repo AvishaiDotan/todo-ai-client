@@ -55,6 +55,10 @@ function getBoard(id: number) {
   return httpService.get<Board>(`/boards/${id}`)
 }
 
+function saveBoardsOrder(orderedBoards: BoardOrderSave) {
+  return httpService.post(`/boards/orders`, orderedBoards)
+}
+
 async function downloadBoardExcel(boardId: number, fileName: string) {
   if (!utilService.isLoggedIn()) throw new Error('You must be logged in')
 
@@ -110,10 +114,6 @@ function _getBoardWithId(board: Board) {
 
   storageService.saveToStorage(ID_GENERATOR_KEY, idGenerator)
   return board
-}
-
-function saveBoardsOrder(orderedBoards: BoardOrderSave) {
-  return httpService.post(`/boards/orders`, orderedBoards)
 }
 
 export const boardService = {

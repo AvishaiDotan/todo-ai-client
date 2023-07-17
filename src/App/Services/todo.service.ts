@@ -1,6 +1,10 @@
 import { httpService } from './http.service'
 import { Todo, TodoOrderSave } from '@/Types'
 
+function getTodo(todoId: number) {
+  return httpService.get<Todo>(`/todos/${todoId}`)
+}
+
 function createTodo(todo: Todo) {
   return httpService.post(`/todos/${todo.id}`, todo)
 }
@@ -22,6 +26,7 @@ function saveTodosOrder(orderedTodos: TodoOrderSave) {
 }
 
 export const todoService = {
+  getTodo,
   createTodo,
   updateTodo,
   updateTodoStatus,
