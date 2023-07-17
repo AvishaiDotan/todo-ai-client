@@ -10,8 +10,7 @@ import { ImSpinner2 } from 'react-icons/im'
 
 import { loginUser, registerUser } from '@/Store/Actions/account.actions'
 import { useAppDispatch } from '@/Store'
-import { gBoards } from '@/Services/board.service'
-import { createManyBoards } from '@/Store/Actions/boards.actions'
+import { boardService, gBoards } from '@/Services/board.service'
 import { IRegisterPayload } from '@/Types'
 
 interface IAuthPageProps {
@@ -101,7 +100,7 @@ export default function AuthPage(props: IAuthPageProps) {
       await dispatch(storeAction(formInputs))
       navigate('/home')
 
-      if (gBoards.length) await dispatch(createManyBoards(gBoards))
+      if (gBoards.length) await boardService.createManyBoards(gBoards)
     } catch (error: any) {
       setErrorMsg(error.message)
       console.log(error)

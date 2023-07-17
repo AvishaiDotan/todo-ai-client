@@ -11,18 +11,15 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import type {} from 'redux-thunk/extend-redux'
 
 import { IAccountState, accountReducer } from './Reducers/account.reducer'
-import { IBoardState, boardsReducer } from './Reducers/boards.reducer'
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export interface IAppState {
   account: IAccountState
-  boards: IBoardState
 }
 
 const rootReducer = combineReducers<IAppState>({
-  boards: boardsReducer,
   account: accountReducer,
 })
 

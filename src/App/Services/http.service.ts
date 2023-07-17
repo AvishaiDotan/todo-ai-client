@@ -1,10 +1,8 @@
 import Axios, { AxiosRequestConfig } from 'axios'
-const isFromAvishai = true
 export const axios = Axios.create()
-const baseURL =
-  import.meta.env.DEV && !isFromAvishai
-    ? 'http://localhost:5065/api'  // Development URL
-    : 'http://165.227.163.183/api' // Production URL
+const baseURL = import.meta.env.DEV
+  ? 'http://localhost:5065/api' // Development URL
+  : 'http://165.227.163.183/api' // Production URL
 
 export const httpService = {
   get<T>(endpoint: string, data = null, options?: AxiosRequestConfig) {
