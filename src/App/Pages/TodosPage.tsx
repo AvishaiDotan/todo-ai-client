@@ -50,7 +50,7 @@ export default function TodosPage() {
     }
   }
 
-  const handleItemStatusChange = async (
+  const handleTodoStatusChange = async (
     item: DataToRenderType,
     isDone: boolean
   ) => {
@@ -61,7 +61,7 @@ export default function TodosPage() {
     })
   }
 
-  const handleItemTextChange = (item: DataToRenderType, newText: string) => {
+  const handleTodoTitleChange = (item: DataToRenderType, newText: string) => {
     setBoardData((draft) => {
       const todo2Update = draft?.todos.find((todo) => todo.id === item.id)
       todo2Update && (todo2Update.title = newText)
@@ -72,6 +72,15 @@ export default function TodosPage() {
 
   const saveChanges = async (updatedItem: Todo) => {
     await todoService.updateTodo(updatedItem)
+  }
+
+  const handleTodoRemove = async (todoId: number) => {
+    await todoService.deleteTodo(todoId)
+    
+    setBoardData((draft) => {
+      const idx = draft?.todos.findIndex((todo) => todo.id === todoId)
+      idx !== -1 && draft?.todos.splice(idx!, 1)
+    })
   }
 
   const debouncedSaveItem = useCallback(debounce(saveChanges, 500), [])
@@ -87,8 +96,9 @@ export default function TodosPage() {
               <TableBody
                 dataToRender={boardData.todos}
                 dataToRenderType={DataToRenderTypeEnum.todo}
-                onItemStatusChange={handleItemStatusChange}
-                onItemTextChange={handleItemTextChange}
+                onItemStatusChange={handleTodoStatusChange}
+                onItemTextChange={handleTodoTitleChange}
+                onItemRemove={handleTodoRemove}
               />
             ) : (
               <TodoAiLoader />

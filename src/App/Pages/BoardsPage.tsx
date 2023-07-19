@@ -33,7 +33,7 @@ export default function BoardsPage() {
     }
   }
 
-  const handleItemStatusChange = async (
+  const handleBoardStatusChange = async (
     item: DataToRenderType,
     isDone: boolean
   ) => {
@@ -49,7 +49,7 @@ export default function BoardsPage() {
     })
   }
 
-  const handleItemTextChange = (item: DataToRenderType, newName: string) => {
+  const handleBoardNameChange = (item: DataToRenderType, newName: string) => {
     setBoardList((draft) => {
       const board2Update = draft.find((board) => board.id === item.id)
       board2Update && (board2Update.name = newName)
@@ -59,6 +59,15 @@ export default function BoardsPage() {
 
   const saveChanges = async (updatedItem: Board) => {
     await boardService.updateBoard(updatedItem)
+  }
+
+  const handleBoardRemove = async (boardId: number) => {
+    await boardService.deleteBoard(boardId)
+    
+    setBoardList((draft) => {
+      const idx = draft.findIndex((board) => board.id === boardId)
+      idx !== -1 && draft.splice(idx!, 1)
+    })
   }
 
   const debouncedSaveItem = useCallback(debounce(saveChanges, 500), [])
@@ -74,8 +83,9 @@ export default function BoardsPage() {
               <TableBody
                 dataToRender={boardList}
                 dataToRenderType={DataToRenderTypeEnum.board}
-                onItemStatusChange={handleItemStatusChange}
-                onItemTextChange={handleItemTextChange}
+                onItemStatusChange={handleBoardStatusChange}
+                onItemTextChange={handleBoardNameChange}
+                onItemRemove={handleBoardRemove}
               />
             ) : (
               <TodoAiLoader />

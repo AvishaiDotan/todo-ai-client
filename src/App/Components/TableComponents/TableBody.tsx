@@ -14,6 +14,7 @@ interface ITableBodyProps {
   dataToRenderType: DataToRenderTypeEnum
   onItemStatusChange: (item: DataToRenderType, isDone: boolean) => void
   onItemTextChange: (item: DataToRenderType, newText: string) => void
+  onItemRemove: (itemId: number) => void
 }
 
 export default function TableBody(props: ITableBodyProps) {
@@ -43,6 +44,7 @@ export default function TableBody(props: ITableBodyProps) {
               item={dataItem}
               dataToRenderType={props.dataToRenderType}
               onTextChange={props.onItemTextChange}
+              onItemRemove={props.onItemRemove}
             />
           }
 

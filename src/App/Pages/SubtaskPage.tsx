@@ -62,6 +62,15 @@ export default function SubtaskPage() {
     await subtaskService.updateSubTask(updatedItem)
   }
 
+  const handleSubtaskRemove = async (subtaskId: number) => {
+    await subtaskService.deleteSubTask(subtaskId)
+
+    setTodoData((draft) => {
+      const idx = draft?.subTasks.findIndex((st) => st.id === subtaskId)
+      idx !== -1 && draft?.subTasks.splice(idx!, 1)
+    })
+  }
+
   const debouncedSaveItem = useCallback(debounce(saveChanges, 500), [])
 
   return (
@@ -77,6 +86,7 @@ export default function SubtaskPage() {
                 dataToRenderType={DataToRenderTypeEnum.subTask}
                 onItemStatusChange={handleItemStatusChange}
                 onItemTextChange={handleItemTextChange}
+                onItemRemove={handleSubtaskRemove}
               />
             ) : (
               <TodoAiLoader />

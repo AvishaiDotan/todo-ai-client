@@ -7,18 +7,20 @@ import {
   Todo,
 } from '@/Types'
 import { Link } from 'react-router-dom'
-import { BiPencil } from 'react-icons/bi'
+import { BiPencil, BiTrash } from 'react-icons/bi'
 
 interface IDataToRenderItemProps {
   item: DataToRenderType
   dataToRenderType: DataToRenderTypeEnum
   onTextChange: (item: DataToRenderType, newText: string) => void
+  onItemRemove: (itemId: number) => void
 }
 
 export default function DataToRenderItem({
   dataToRenderType,
   item,
   onTextChange,
+  onItemRemove,
 }: IDataToRenderItemProps) {
   const [isEditMode, setEditMode] = useState(false)
 
@@ -72,8 +74,13 @@ export default function DataToRenderItem({
           onBlur={() => setEditMode(false)}
         />
       </div>
-      <div onClick={setEditingMode}>
-        <BiPencil />
+      <div className='text-xl'>
+        <span onClick={setEditingMode}>
+          <BiPencil className='text-orange-400' />
+        </span>
+        <span onClick={() => onItemRemove(item.id)}>
+          <BiTrash className='text-red-400' />
+        </span>
       </div>
     </div>
   )
