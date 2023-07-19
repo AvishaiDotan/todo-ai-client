@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback } from 'react'
+import { ReactSortable, Sortable, Store } from 'react-sortablejs'
 import {
   DataToRender,
   DataToRenderTypeEnum,
@@ -15,6 +16,9 @@ interface ITableBodyProps {
   onItemStatusChange: (item: DataToRenderType, isDone: boolean) => void
   onItemTextChange: (item: DataToRenderType, newText: string) => void
   onItemRemove: (itemId: number) => void
+  onItemsOrderChange:
+    | ((newState: DataToRender, sortable: Sortable | null, store: Store) => void)
+    | undefined
 }
 
 export default function TableBody(props: ITableBodyProps) {
@@ -35,29 +39,38 @@ export default function TableBody(props: ITableBodyProps) {
     item: DataToRenderType
   ) => props.onItemStatusChange(item, e.target.checked)
 
+  const itemList = props.dataToRender.map((dataItem) => (
+    <div key={dataItem.id} className='item grid-layout'>
+      {
+        <DataToRenderItem
+          item={dataItem}
+          dataToRenderType={props.dataToRenderType}
+          onTextChange={props.onItemTextChange}
+          onItemRemove={props.onItemRemove}
+        />
+      }
+
+      <div>
+        {
+          <input
+            type='checkbox'
+            checked={isDone(dataItem)}
+            onChange={(e) => handleStatusChange(e, dataItem)}></input>
+        }
+      </div>
+    </div>
+  ))
+
   return (
     <div className='body'>
-      {props.dataToRender.map((dataItem) => (
-        <div key={dataItem.id} className='item grid-layout'>
-          {
-            <DataToRenderItem
-              item={dataItem}
-              dataToRenderType={props.dataToRenderType}
-              onTextChange={props.onItemTextChange}
-              onItemRemove={props.onItemRemove}
-            />
-          }
-
-          <div>
-            {
-              <input
-                type='checkbox'
-                checked={isDone(dataItem)}
-                onChange={(e) => handleStatusChange(e, dataItem)}></input>
-            }
-          </div>
-        </div>
-      ))}
+      <ReactSortable
+        list={props.dataToRender as any || []}
+        setList={props.onItemsOrderChange}
+        animation={200}
+        delayOnTouchOnly
+        delay={2}>
+        {itemList}
+      </ReactSortable>
     </div>
   )
 }

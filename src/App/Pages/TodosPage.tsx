@@ -14,7 +14,13 @@ import DownloadBtn from '@/Components/MiniComponents/DownloadBtn'
 
 import { boardService } from '@/Services/board.service'
 import { todoService } from '@/Services/todo.service'
-import { Board, DataToRenderType, DataToRenderTypeEnum, Todo } from '@/Types'
+import {
+  Board,
+  DataToRender,
+  DataToRenderType,
+  DataToRenderTypeEnum,
+  Todo,
+} from '@/Types'
 
 export default function TodosPage() {
   const [boardData, setBoardData] = useImmer<Board | null>(null)
@@ -27,6 +33,10 @@ export default function TodosPage() {
     boardId && loadContent()
   }, [])
 
+  useEffect(() => {
+    boardData?.todos && handleSaveTodosOrder()
+  }, [boardData?.todos])
+
   const loadContent = async () => {
     try {
       setIsLoading(true)
@@ -37,6 +47,26 @@ export default function TodosPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleSaveTodosOrder = useCallback(
+    debounce(async () => {
+      boardData &&
+        (await todoService.saveTodosOrder({
+          boardId: boardData.id,
+          todos: boardData.todos,
+        }))
+    }, 1000),
+    []
+  )
+
+  const handleSortableSetList = async (todos: DataToRender) => {
+    setBoardData((draft) => {
+      const orderedTodos = todos.map<Todo>(
+        (todo, idx) => ({ ...todo, order: idx + 1 } as Todo)
+      )
+      draft && (draft.todos = orderedTodos)
+    })
   }
 
   const handleExcelDownload = async () => {
@@ -99,6 +129,7 @@ export default function TodosPage() {
                 onItemStatusChange={handleTodoStatusChange}
                 onItemTextChange={handleTodoTitleChange}
                 onItemRemove={handleTodoRemove}
+                onItemsOrderChange={handleSortableSetList}
               />
             ) : (
               <TodoAiLoader />

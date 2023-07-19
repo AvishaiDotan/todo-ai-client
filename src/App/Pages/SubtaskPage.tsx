@@ -12,7 +12,13 @@ import TodoAiLoader from '@/Components/MiniComponents/TodoAiLoader'
 import TodoAICheckbox from '@/Components/MiniComponents/TodoAICheckbox'
 
 import { todoService } from '@/Services/todo.service'
-import { DataToRenderType, DataToRenderTypeEnum, SubTask, Todo } from '@/Types'
+import {
+  DataToRender,
+  DataToRenderType,
+  DataToRenderTypeEnum,
+  SubTask,
+  Todo,
+} from '@/Types'
 import { subtaskService } from '@/Services/subtask.service'
 
 export default function SubtaskPage() {
@@ -24,6 +30,10 @@ export default function SubtaskPage() {
   useEffect(() => {
     todoId && loadContent()
   }, [])
+
+  useEffect(() => {
+    todoData?.subTasks && handleSaveSubtasksOrder()
+  }, [todoData?.subTasks])
 
   const loadContent = async () => {
     try {
@@ -37,7 +47,27 @@ export default function SubtaskPage() {
     }
   }
 
-  const handleItemStatusChange = async (
+  const handleSaveSubtasksOrder = useCallback(
+    debounce(async () => {
+      todoData &&
+        (await subtaskService.saveSubtasksOrder({
+          todoId: todoData.id,
+          subTasks: todoData.subTasks,
+        }))
+    }, 1000),
+    []
+  )
+
+  const handleSortableSetList = async (subtasks: DataToRender) => {
+    setTodoData((draft) => {
+      const orderedSubtasks = subtasks.map<SubTask>(
+        (st, idx) => ({ ...st, order: idx + 1 } as SubTask)
+      )
+      draft && (draft.subTasks = orderedSubtasks)
+    })
+  }
+
+  const handleSubtaskStatusChange = async (
     item: DataToRenderType,
     isDone: boolean
   ) => {
@@ -49,7 +79,7 @@ export default function SubtaskPage() {
     })
   }
 
-  const handleItemTextChange = (item: DataToRenderType, newText: string) => {
+  const handleSubtaskTextChange = (item: DataToRenderType, newText: string) => {
     setTodoData((draft) => {
       const item2Update = draft?.subTasks.find((st) => st.id === item.id)
       item2Update && (item2Update.text = newText)
@@ -84,9 +114,10 @@ export default function SubtaskPage() {
               <TableBody
                 dataToRender={todoData.subTasks}
                 dataToRenderType={DataToRenderTypeEnum.subTask}
-                onItemStatusChange={handleItemStatusChange}
-                onItemTextChange={handleItemTextChange}
+                onItemStatusChange={handleSubtaskStatusChange}
+                onItemTextChange={handleSubtaskTextChange}
                 onItemRemove={handleSubtaskRemove}
+                onItemsOrderChange={handleSortableSetList}
               />
             ) : (
               <TodoAiLoader />

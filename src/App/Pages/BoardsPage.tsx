@@ -11,7 +11,12 @@ import TodoAiLoader from '@/Components/MiniComponents/TodoAiLoader'
 import TodoAICheckbox from '@/Components/MiniComponents/TodoAICheckbox'
 
 import { boardService } from '@/Services/board.service'
-import { Board, DataToRenderType, DataToRenderTypeEnum } from '@/Types'
+import {
+  Board,
+  DataToRender,
+  DataToRenderType,
+  DataToRenderTypeEnum,
+} from '@/Types'
 
 export default function BoardsPage() {
   const [boardList, setBoardList] = useImmer<Board[]>([])
@@ -20,6 +25,10 @@ export default function BoardsPage() {
   useEffect(() => {
     loadContent()
   }, [])
+
+  useEffect(() => {
+    boardList && handleSaveBoardsOrder()
+  }, [boardList])
 
   const loadContent = async () => {
     try {
@@ -31,6 +40,24 @@ export default function BoardsPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleSaveBoardsOrder = useCallback(
+    debounce(async () => {
+      await boardService.saveBoardsOrder({
+        boards: boardList,
+      })
+    }, 1000),
+    []
+  )
+
+  const handleSortableSetList = async (boards: DataToRender) => {
+    setBoardList((boardListDraft) => {
+      const orderedBoards = boards.map<Board>(
+        (board, idx) => ({ ...board, order: idx + 1 } as Board)
+      )
+      boardListDraft && (boardListDraft = orderedBoards)
+    })
   }
 
   const handleBoardStatusChange = async (
@@ -86,6 +113,7 @@ export default function BoardsPage() {
                 onItemStatusChange={handleBoardStatusChange}
                 onItemTextChange={handleBoardNameChange}
                 onItemRemove={handleBoardRemove}
+                onItemsOrderChange={handleSortableSetList}
               />
             ) : (
               <TodoAiLoader />
