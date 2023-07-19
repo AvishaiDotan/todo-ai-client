@@ -76,7 +76,7 @@ export default function TodosPage() {
 
   const handleTodoRemove = async (todoId: number) => {
     await todoService.deleteTodo(todoId)
-    
+
     setBoardData((draft) => {
       const idx = draft?.todos.findIndex((todo) => todo.id === todoId)
       idx !== -1 && draft?.todos.splice(idx!, 1)
@@ -87,11 +87,11 @@ export default function TodosPage() {
 
   return (
     <section className='boards-page'>
-      <TableHeaderTitle title={boardData?.name} />
+      <TableHeaderTitle title={boardData?.name + ' Board'} />
       <section className='table-wrapper'>
         <section className='table'>
           <TableHeaders />
-          <div style={{ height: 'calc(100% - 60px)' }}>
+          <div style={{ minHeight: 'calc(100% - 60px)' }}>
             {!isLoading && boardData ? (
               <TableBody
                 dataToRender={boardData.todos}

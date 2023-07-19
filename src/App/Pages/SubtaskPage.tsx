@@ -75,11 +75,11 @@ export default function SubtaskPage() {
 
   return (
     <section className='boards-page'>
-      <TableHeaderTitle title={todoData?.title} />
+      <TableHeaderTitle title={todoData?.title + ' Todos'} />
       <section className='table-wrapper'>
         <section className='table'>
           <TableHeaders />
-          <div style={{ height: 'calc(100% - 60px)' }}>
+          <div style={{ minHeight: 'calc(100% - 60px)' }}>
             {!isLoading && todoData ? (
               <TableBody
                 dataToRender={todoData.subTasks}

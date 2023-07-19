@@ -8,6 +8,7 @@ import {
 } from '@/Types'
 import { Link } from 'react-router-dom'
 import { BiPencil, BiTrash } from 'react-icons/bi'
+import { RxDragHandleDots2 as DragIcon } from 'react-icons/rx'
 
 interface IDataToRenderItemProps {
   item: DataToRenderType
@@ -28,8 +29,7 @@ export default function DataToRenderItem({
     if (isEditMode) setFocus()
   }, [isEditMode])
 
-  const subTaskRef = useRef<HTMLInputElement>(null)
-  const otherRef = useRef<HTMLInputElement>(null)
+  const editInputRef = useRef<HTMLInputElement>(null)
 
   const getItemText = (item: DataToRenderType): string => {
     if (dataToRenderType === DataToRenderTypeEnum.board)
@@ -51,11 +51,7 @@ export default function DataToRenderItem({
     onTextChange(item, newText)
 
   const setFocus = () => {
-    if (dataToRenderType === DataToRenderTypeEnum.subTask)
-      subTaskRef.current?.focus()
-    else {
-      otherRef.current?.focus()
-    }
+    editInputRef.current?.focus()
   }
 
   const setEditingMode = (e: MouseEvent) => {
@@ -63,31 +59,36 @@ export default function DataToRenderItem({
     setEditMode(true)
   }
 
-  const itemContent = (
+  const editInput = (
+    <input
+      ref={editInputRef}
+      className='outline-0 bg-transparent cursor-pointer w-full'
+      value={getItemText(item)}
+      onChange={(e) => handleTextChange(item, e.target.value)}
+      onBlur={() => setEditMode(false)}
+    />
+  )
+
+  return (
     <div className='data-to-render-item'>
-      <div>
-        <input
-          ref={otherRef}
-          className='outline-0 bg-transparent'
-          value={getItemText(item)}
-          onChange={(e) => handleTextChange(item, e.target.value)}
-          onBlur={() => setEditMode(false)}
-        />
+      <div className='text-2xl text-slate-400 hover:text-slate-600'>
+        <DragIcon className='cursor-grab active:cursor-grabbing' />
       </div>
-      <div className='text-xl'>
+      {dataToRenderType !== DataToRenderTypeEnum.subTask ? (
+        <Link to={getHref(item)} className='flex-grow'>
+          {editInput}
+        </Link>
+      ) : (
+        <div className='flex-grow'>{editInput}</div>
+      )}
+      <div className='flex gap-3 text-xl'>
         <span onClick={setEditingMode}>
-          <BiPencil className='text-orange-400' />
+          <BiPencil className='text-orange-400 hover:text-orange-600' />
         </span>
         <span onClick={() => onItemRemove(item.id)}>
-          <BiTrash className='text-red-400' />
+          <BiTrash className='text-red-400 hover:text-red-600' />
         </span>
       </div>
     </div>
-  )
-
-  return dataToRenderType !== DataToRenderTypeEnum.subTask ? (
-    <Link to={getHref(item)}>{itemContent}</Link>
-  ) : (
-    <>{itemContent}</>
   )
 }

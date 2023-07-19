@@ -63,7 +63,7 @@ export default function BoardsPage() {
 
   const handleBoardRemove = async (boardId: number) => {
     await boardService.deleteBoard(boardId)
-    
+
     setBoardList((draft) => {
       const idx = draft.findIndex((board) => board.id === boardId)
       idx !== -1 && draft.splice(idx!, 1)
@@ -78,7 +78,7 @@ export default function BoardsPage() {
       <section className='table-wrapper'>
         <section className='table'>
           <TableHeaders />
-          <div style={{ height: 'calc(100% - 60px)' }}>
+          <div style={{ minHeight: 'calc(100% - 60px)' }}>
             {!isLoading ? (
               <TableBody
                 dataToRender={boardList}
