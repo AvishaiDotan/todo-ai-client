@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { debounce } from 'lodash'
+import { useImmer } from 'use-immer'
 
 import arrow from '../../../src/App/Assets/arrow.png'
 import CameraWrapper from '@/Components/HomePageStyledElements/CameraWrapper'
@@ -9,12 +11,11 @@ import TodoAiLoader from '@/Components/MiniComponents/TodoAiLoader'
 import TodoAICheckbox from '@/Components/MiniComponents/TodoAICheckbox'
 
 import { boardService } from '@/Services/board.service'
-import { Board } from '@/Types'
+import { Board, DataToRenderType, DataToRenderTypeEnum } from '@/Types'
 
 export default function BoardsPage() {
-  const [boards, setBoards] = useState<Board[]>([])
+  const [boardList, setBoardList] = useImmer<Board[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isDownloading, setIsDownloading] = useState(false)
 
   useEffect(() => {
     loadContent()
@@ -24,7 +25,7 @@ export default function BoardsPage() {
     try {
       setIsLoading(true)
       const boards = await boardService.getBoards()
-      setBoards(boards)
+      setBoardList(boards)
     } catch (error) {
       console.log(error)
     } finally {
@@ -32,16 +33,35 @@ export default function BoardsPage() {
     }
   }
 
-  const handleExcelDownload = async (boardId: number, fileName: string) => {
-    try {
-      setIsDownloading(true)
-      await boardService.downloadBoardExcel(boardId, fileName)
-    } catch (error) {
-      console.log('Failed to download', error)
-    } finally {
-      setIsDownloading(false)
-    }
+  const handleItemStatusChange = async (
+    item: DataToRenderType,
+    isDone: boolean
+  ) => {
+    await boardService.updateBoardStatus(item.id, isDone)
+
+    setBoardList((draft) => {
+      const board2Update = draft.find((board) => board.id === item.id)
+      if (board2Update) {
+        board2Update.todos.forEach((todo) =>
+          todo.subTasks.forEach((st) => (st.isDone = isDone))
+        )
+      }
+    })
   }
+
+  const handleItemTextChange = (item: DataToRenderType, newName: string) => {
+    setBoardList((draft) => {
+      const board2Update = draft.find((board) => board.id === item.id)
+      board2Update && (board2Update.name = newName)
+    })
+    debouncedSaveItem({ ...item, name: newName } as Board)
+  }
+
+  const saveChanges = async (updatedItem: Board) => {
+    await boardService.updateBoard(updatedItem)
+  }
+
+  const debouncedSaveItem = useCallback(debounce(saveChanges, 500), [])
 
   return (
     <section className='boards-page'>
@@ -51,13 +71,13 @@ export default function BoardsPage() {
           <TableHeaders />
           <div style={{ height: 'calc(100% - 60px)' }}>
             {!isLoading ? (
-              <span>TODO: RenderTable</span>
+              <TableBody
+                dataToRender={boardList}
+                dataToRenderType={DataToRenderTypeEnum.board}
+                onItemStatusChange={handleItemStatusChange}
+                onItemTextChange={handleItemTextChange}
+              />
             ) : (
-              // <TableBody
-              //   boardCrudActions={boardCrudActions}
-              //   dataToRender={boards}
-              //   dataToRenderType={dataToRenderType}
-              // />
               <TodoAiLoader />
             )}
           </div>

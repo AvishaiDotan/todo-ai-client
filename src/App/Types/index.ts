@@ -64,13 +64,6 @@ export enum PageRoute {
   login = 'login',
 }
 
-
-export interface IBoardCrudActions {
-	onUpdateBoard: (board: Board) => Promise<Board>
-  onUpdateTodo: (todo: Todo) => Promise<Todo>
-  onUpdateSubTask: (subtask: SubTask) => Promise<SubTask>
-}
-
 export type DataToRender = Board[] | Todo[] | SubTask[]
 export type DataToRenderType = Board | Todo | SubTask
 export enum DataToRenderTypeEnum {

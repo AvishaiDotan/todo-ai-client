@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { debounce } from 'lodash'
+import { useImmer } from 'use-immer'
 
 import arrow from '../../../src/App/Assets/arrow.png'
 import CameraWrapper from '@/Components/HomePageStyledElements/CameraWrapper'
@@ -10,10 +12,11 @@ import TodoAiLoader from '@/Components/MiniComponents/TodoAiLoader'
 import TodoAICheckbox from '@/Components/MiniComponents/TodoAICheckbox'
 
 import { todoService } from '@/Services/todo.service'
-import { Todo } from '@/Types'
+import { DataToRenderType, DataToRenderTypeEnum, SubTask, Todo } from '@/Types'
+import { subtaskService } from '@/Services/subtask.service'
 
 export default function SubtaskPage() {
-  const [todoData, setTodoData] = useState<Todo | null>(null)
+  const [todoData, setTodoData] = useImmer<Todo | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const navigate = useNavigate()
   const { todoId } = useParams()
@@ -34,6 +37,33 @@ export default function SubtaskPage() {
     }
   }
 
+  const handleItemStatusChange = async (
+    item: DataToRenderType,
+    isDone: boolean
+  ) => {
+    await subtaskService.updateSubTask({ ...item, isDone } as SubTask)
+
+    setTodoData((draft) => {
+      const item2Update = draft?.subTasks.find((st) => st.id === item.id)
+      item2Update && (item2Update.isDone = isDone)
+    })
+  }
+
+  const handleItemTextChange = (item: DataToRenderType, newText: string) => {
+    setTodoData((draft) => {
+      const item2Update = draft?.subTasks.find((st) => st.id === item.id)
+      item2Update && (item2Update.text = newText)
+    })
+
+    debouncedSaveItem({ ...(item as SubTask), text: newText })
+  }
+
+  const saveChanges = async (updatedItem: SubTask) => {
+    await subtaskService.updateSubTask(updatedItem)
+  }
+
+  const debouncedSaveItem = useCallback(debounce(saveChanges, 500), [])
+
   return (
     <section className='boards-page'>
       <TableHeaderTitle title={todoData?.title} />
@@ -41,14 +71,14 @@ export default function SubtaskPage() {
         <section className='table'>
           <TableHeaders />
           <div style={{ height: 'calc(100% - 60px)' }}>
-            {!isLoading ? (
-              <span>TODO: RenderTable</span>
+            {!isLoading && todoData ? (
+              <TableBody
+                dataToRender={todoData.subTasks}
+                dataToRenderType={DataToRenderTypeEnum.subTask}
+                onItemStatusChange={handleItemStatusChange}
+                onItemTextChange={handleItemTextChange}
+              />
             ) : (
-              //   <TableBody
-              //     boardCrudActions={boardCrudActions}
-              //     dataToRender={boardData}
-              //     dataToRenderType={dataToRenderType}
-              //   />
               <TodoAiLoader />
             )}
           </div>
@@ -74,7 +104,7 @@ export default function SubtaskPage() {
           <span
             className='underline cursor-pointer'
             onClick={() => navigate(-1)}>
-            Go back to todos
+            Go back to Todos Page
           </span>
         </div>
       </section>

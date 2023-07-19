@@ -1,3 +1,4 @@
+import { ChangeEvent, useCallback } from 'react'
 import {
   DataToRender,
   DataToRenderTypeEnum,
@@ -5,36 +6,43 @@ import {
   Board,
   Todo,
   SubTask,
-  IBoardCrudActions,
 } from '@/Types'
 import DataToRenderItem from './DataToRenderItem'
 
 interface ITableBodyProps {
   dataToRender: DataToRender
   dataToRenderType: DataToRenderTypeEnum
-  boardCrudActions: IBoardCrudActions
+  onItemStatusChange: (item: DataToRenderType, isDone: boolean) => void
+  onItemTextChange: (item: DataToRenderType, newText: string) => void
 }
 
 export default function TableBody(props: ITableBodyProps) {
-  const isDone = (item: DataToRenderType): boolean => {
-    if (props.dataToRenderType == DataToRenderTypeEnum.board)
+  const isDone = useCallback((item: DataToRenderType): boolean => {
+    if (props.dataToRenderType === DataToRenderTypeEnum.board) {
       return (item as Board)?.todos?.every((t) =>
         t.subTasks.every((st) => st.isDone)
       )
-    else if (props.dataToRenderType == DataToRenderTypeEnum.todo)
+    } else if (props.dataToRenderType === DataToRenderTypeEnum.todo) {
       return (item as Todo)?.subTasks?.every((st) => st.isDone)
-    else return (item as SubTask).isDone
-  }
+    } else {
+      return (item as SubTask).isDone
+    }
+  }, [])
+
+  const handleStatusChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    item: DataToRenderType
+  ) => props.onItemStatusChange(item, e.target.checked)
 
   return (
     <div className='body'>
-      {props.dataToRender.map((i) => (
-        <div key={i.id} className='item grid-layout'>
+      {props.dataToRender.map((dataItem) => (
+        <div key={dataItem.id} className='item grid-layout'>
           {
             <DataToRenderItem
-              boardCrudActions={props.boardCrudActions}
-              item={i}
+              item={dataItem}
               dataToRenderType={props.dataToRenderType}
+              onTextChange={props.onItemTextChange}
             />
           }
 
@@ -42,8 +50,8 @@ export default function TableBody(props: ITableBodyProps) {
             {
               <input
                 type='checkbox'
-                checked={isDone(i)}
-                onChange={() => {}}></input>
+                checked={isDone(dataItem)}
+                onChange={(e) => handleStatusChange(e, dataItem)}></input>
             }
           </div>
         </div>

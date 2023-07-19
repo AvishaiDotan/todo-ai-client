@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { debounce } from 'lodash'
+import { useImmer } from 'use-immer'
 
 import arrow from '../../../src/App/Assets/arrow.png'
 import CameraWrapper from '@/Components/HomePageStyledElements/CameraWrapper'
@@ -12,10 +14,10 @@ import DownloadBtn from '@/Components/MiniComponents/DownloadBtn'
 
 import { boardService } from '@/Services/board.service'
 import { todoService } from '@/Services/todo.service'
-import { Board } from '@/Types'
+import { Board, DataToRenderType, DataToRenderTypeEnum, Todo } from '@/Types'
 
 export default function TodosPage() {
-  const [boardData, setBoardData] = useState<Board | null>(null)
+  const [boardData, setBoardData] = useImmer<Board | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isDownloading, setIsDownloading] = useState(false)
   const navigate = useNavigate()
@@ -48,6 +50,32 @@ export default function TodosPage() {
     }
   }
 
+  const handleItemStatusChange = async (
+    item: DataToRenderType,
+    isDone: boolean
+  ) => {
+    await todoService.updateTodoStatus(item.id, isDone)
+    setBoardData((draft) => {
+      const todo2Update = draft?.todos.find((todo) => todo.id === item.id)
+      todo2Update && todo2Update.subTasks.forEach((st) => (st.isDone = isDone))
+    })
+  }
+
+  const handleItemTextChange = (item: DataToRenderType, newText: string) => {
+    setBoardData((draft) => {
+      const todo2Update = draft?.todos.find((todo) => todo.id === item.id)
+      todo2Update && (todo2Update.title = newText)
+    })
+
+    debouncedSaveItem({ ...item, title: newText } as Todo)
+  }
+
+  const saveChanges = async (updatedItem: Todo) => {
+    await todoService.updateTodo(updatedItem)
+  }
+
+  const debouncedSaveItem = useCallback(debounce(saveChanges, 500), [])
+
   return (
     <section className='boards-page'>
       <TableHeaderTitle title={boardData?.name} />
@@ -55,14 +83,14 @@ export default function TodosPage() {
         <section className='table'>
           <TableHeaders />
           <div style={{ height: 'calc(100% - 60px)' }}>
-            {!isLoading ? (
-              <span>TODO: RenderTable</span>
+            {!isLoading && boardData ? (
+              <TableBody
+                dataToRender={boardData.todos}
+                dataToRenderType={DataToRenderTypeEnum.todo}
+                onItemStatusChange={handleItemStatusChange}
+                onItemTextChange={handleItemTextChange}
+              />
             ) : (
-              //   <TableBody
-              //     boardCrudActions={boardCrudActions}
-              //     dataToRender={boardData}
-              //     dataToRenderType={dataToRenderType}
-              //   />
               <TodoAiLoader />
             )}
           </div>
@@ -96,7 +124,7 @@ export default function TodosPage() {
           <span
             className='underline cursor-pointer'
             onClick={() => navigate(-1)}>
-            Go back to boards
+            Go back to Boards Page
           </span>
         </div>
       </section>

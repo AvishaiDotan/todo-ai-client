@@ -32,11 +32,11 @@ export const router = createBrowserRouter([
         element: <BoardsPage />,
       },
       {
-        path: 'todos/:boardId',
+        path: 'boards/:boardId',
         element: <TodosPage />,
       },
       {
-        path: 'subtasks/:todoId',
+        path: 'boards/:boardId/subtasks/:todoId',
         element: <SubtaskPage />,
       },
       {
