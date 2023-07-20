@@ -96,6 +96,10 @@ export default function BoardsPage() {
 
   const debouncedSaveItem = useCallback(debounce(saveChanges, 500), [])
 
+  const handleExcelDownload = async (boardId: number, fileName: string) => {
+    await boardService.downloadBoardExcel(boardId, fileName)
+  }
+
   return (
     <section className='boards-page'>
       <TableHeaderTitle title={'Boards'} />
@@ -111,6 +115,7 @@ export default function BoardsPage() {
                 onItemTextChange={handleBoardNameChange}
                 onItemRemove={handleBoardRemove}
                 onItemsOrderChange={handleSortableSetList}
+                onDownloadExcel={handleExcelDownload}
               />
             ) : (
               <TodoAiLoader />

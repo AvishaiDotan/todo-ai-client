@@ -16,8 +16,13 @@ interface ITableBodyProps {
   onItemStatusChange: (item: DataToRenderType, isDone: boolean) => void
   onItemTextChange: (item: DataToRenderType, newText: string) => void
   onItemRemove: (itemId: number) => void
+  onDownloadExcel?: (itemId: number, fileName: string) => void
   onItemsOrderChange:
-    | ((newState: DataToRender, sortable: Sortable | null, store: Store) => void)
+    | ((
+        newState: DataToRender,
+        sortable: Sortable | null,
+        store: Store
+      ) => void)
     | undefined
 }
 
@@ -47,6 +52,7 @@ export default function TableBody(props: ITableBodyProps) {
           dataToRenderType={props.dataToRenderType}
           onTextChange={props.onItemTextChange}
           onItemRemove={props.onItemRemove}
+          onDownloadExcel={props.onDownloadExcel}
         />
       }
 
@@ -64,7 +70,7 @@ export default function TableBody(props: ITableBodyProps) {
   return (
     <div className='body'>
       <ReactSortable
-        list={props.dataToRender as any || []}
+        list={(props.dataToRender as any) || []}
         setList={props.onItemsOrderChange}
         animation={200}
         delayOnTouchOnly

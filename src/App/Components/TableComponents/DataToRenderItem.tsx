@@ -9,12 +9,14 @@ import {
 import { Link } from 'react-router-dom'
 import { BiPencil, BiTrash } from 'react-icons/bi'
 import { RxDragHandleDots2 as DragIcon } from 'react-icons/rx'
+import { BsDownload } from 'react-icons/bs'
 
 interface IDataToRenderItemProps {
   item: DataToRenderType
   dataToRenderType: DataToRenderTypeEnum
   onTextChange: (item: DataToRenderType, newText: string) => void
   onItemRemove: (itemId: number) => void
+  onDownloadExcel?: (itemId: number, fileName: string) => void
 }
 
 export default function DataToRenderItem({
@@ -22,6 +24,7 @@ export default function DataToRenderItem({
   item,
   onTextChange,
   onItemRemove,
+  onDownloadExcel,
 }: IDataToRenderItemProps) {
   const [isEditMode, setEditMode] = useState(false)
 
@@ -69,6 +72,8 @@ export default function DataToRenderItem({
     />
   )
 
+  const handleExcelDownload = () =>
+    onDownloadExcel && onDownloadExcel(item.id, (item as Board).name)
   return (
     <div className='data-to-render-item'>
       <div className='text-2xl text-slate-400 hover:text-slate-600'>
@@ -88,6 +93,11 @@ export default function DataToRenderItem({
         <span onClick={() => onItemRemove(item.id)}>
           <BiTrash className='text-red-400 hover:text-red-600' />
         </span>
+        {dataToRenderType === DataToRenderTypeEnum.board && (
+          <span title='Download excel file' onClick={handleExcelDownload}>
+            <BsDownload className='text-slate-600 hover:text-slate-900' />
+          </span>
+        )}
       </div>
     </div>
   )
