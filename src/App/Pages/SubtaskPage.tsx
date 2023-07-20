@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { debounce } from 'lodash'
 import { useImmer } from 'use-immer'
@@ -26,6 +26,10 @@ export default function SubtaskPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const navigate = useNavigate()
   const { todoId } = useParams()
+
+  const allStatus = useMemo(() => {
+    return todoData !== null && todoData.subTasks.every((st) => st.isDone)
+  }, [todoData])
 
   useEffect(() => {
     todoId && loadContent()
@@ -99,6 +103,14 @@ export default function SubtaskPage() {
 
   const debouncedSaveItem = useCallback(debounce(saveChanges, 500), [])
 
+  const handleTodoStatusChange = async (status: boolean) => {
+    todoData && (await todoService.updateTodoStatus(todoData?.id, status))
+
+    setTodoData((draft) => {
+      draft?.subTasks.forEach((st) => (st.isDone = status))
+    })
+  }
+
   return (
     <section className='boards-page'>
       <TableHeaderTitle title={todoData?.title + ' Todos'} />
@@ -127,7 +139,10 @@ export default function SubtaskPage() {
           <CameraWrapper isFromHomePage={false}>
             <div className='apply-status-to-all-container'>
               <h4 className='third-font-family'>Status:</h4>
-              <TodoAICheckbox />
+              <TodoAICheckbox
+                checked={allStatus}
+                onChange={handleTodoStatusChange}
+              />
               <div className='checkbox-arrow-wrapper'>
                 <img src={arrow} />
               </div>

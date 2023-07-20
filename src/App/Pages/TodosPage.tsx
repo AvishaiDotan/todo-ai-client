@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { debounce } from 'lodash'
 import { useImmer } from 'use-immer'
@@ -28,6 +28,13 @@ export default function TodosPage() {
   const [isDownloading, setIsDownloading] = useState(false)
   const navigate = useNavigate()
   const { boardId } = useParams()
+
+  const allStatus = useMemo(() => {
+    return (
+      boardData !== null &&
+      boardData.todos.every((todo) => todo.subTasks.every((st) => st.isDone))
+    )
+  }, [boardData])
 
   useEffect(() => {
     boardId && loadContent()
@@ -111,6 +118,16 @@ export default function TodosPage() {
 
   const debouncedSaveItem = useCallback(debounce(saveChanges, 500), [])
 
+  const handleBoardStatusChange = async (status: boolean) => {
+    boardData && (await boardService.updateBoardStatus(boardData.id, status))
+
+    setBoardData((draft) => {
+      draft?.todos.forEach((todo) =>
+        todo.subTasks.forEach((st) => (st.isDone = status))
+      )
+    })
+  }
+
   return (
     <section className='boards-page'>
       <TableHeaderTitle title={boardData?.name + ' Board'} />
@@ -139,7 +156,10 @@ export default function TodosPage() {
           <CameraWrapper isFromHomePage={false}>
             <div className='apply-status-to-all-container'>
               <h4 className='third-font-family'>Status:</h4>
-              <TodoAICheckbox />
+              <TodoAICheckbox
+                checked={allStatus}
+                onChange={handleBoardStatusChange}
+              />
               <div className='checkbox-arrow-wrapper'>
                 <img src={arrow} />
               </div>

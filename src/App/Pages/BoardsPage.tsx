@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { debounce } from 'lodash'
 import { useImmer } from 'use-immer'
 
@@ -21,6 +21,12 @@ import {
 export default function BoardsPage() {
   const [boardList, setBoardList] = useImmer<Board[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const allStatus = useMemo(() => {
+    return boardList.every((board) =>
+      board.todos.every((todo) => todo.subTasks.every((st) => st.isDone))
+    )
+  }, [boardList])
 
   useEffect(() => {
     loadContent()
@@ -71,6 +77,12 @@ export default function BoardsPage() {
         )
       }
     })
+  }
+
+  const handleBoardsStatusChange = async (status: boolean) => {
+    await Promise.all(
+      boardList.map((board) => handleBoardStatusChange(board, status))
+    )
   }
 
   const handleBoardNameChange = (item: DataToRenderType, newName: string) => {
@@ -129,7 +141,10 @@ export default function BoardsPage() {
           <CameraWrapper isFromHomePage={false}>
             <div className='apply-status-to-all-container'>
               <h4 className='third-font-family'>Status:</h4>
-              <TodoAICheckbox />
+              <TodoAICheckbox
+                checked={allStatus}
+                onChange={handleBoardsStatusChange}
+              />
               <div className='checkbox-arrow-wrapper'>
                 <img src={arrow} />
               </div>
