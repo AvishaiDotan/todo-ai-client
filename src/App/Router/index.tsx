@@ -7,7 +7,6 @@ import BoardsPage from '@/Pages/BoardsPage'
 import AuthPage from '@/Pages/AuthPage'
 import TodosPage from '@/Pages/TodosPage'
 import SubtaskPage from '@/Pages/SubtaskPage'
-import E404Page from '@/Pages/E404Page'
 
 export const router = createBrowserRouter([
   {
@@ -48,7 +47,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <E404Page />,
+        element: <Navigate to='/home' />,
       },
     ],
   },
