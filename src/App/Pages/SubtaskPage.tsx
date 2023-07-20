@@ -32,8 +32,8 @@ export default function SubtaskPage() {
   }, [])
 
   useEffect(() => {
-    todoData?.subTasks && handleSaveSubtasksOrder()
-  }, [todoData?.subTasks])
+    todoData && handleSaveSubtasksOrder(todoData.subTasks)
+  }, [todoData])
 
   const loadContent = async () => {
     try {
@@ -48,12 +48,8 @@ export default function SubtaskPage() {
   }
 
   const handleSaveSubtasksOrder = useCallback(
-    debounce(async () => {
-      todoData &&
-        (await subtaskService.saveSubtasksOrder({
-          todoId: todoData.id,
-          subTasks: todoData.subTasks,
-        }))
+    debounce(async (orderedSubtasks: SubTask[]) => {
+      await subtaskService.saveSubtasksOrder(orderedSubtasks)
     }, 1000),
     []
   )

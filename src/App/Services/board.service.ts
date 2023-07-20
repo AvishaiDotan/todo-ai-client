@@ -1,7 +1,7 @@
 import { httpService } from './http.service'
 import { storageService } from './storage.service'
 import { utilService } from './util.service'
-import { Board, BoardOrderSave } from '@/Types'
+import { Board } from '@/Types'
 
 const LOCAL_BOARDS_DB = 'boards_DB'
 export var gBoards =
@@ -55,8 +55,8 @@ function getBoard(id: number) {
   return httpService.get<Board>(`/boards/${id}`)
 }
 
-function saveBoardsOrder(orderedBoards: BoardOrderSave) {
-  return httpService.post(`/boards/orders`, orderedBoards)
+function saveBoardsOrder(orderedBoards: Board[]) {
+  return httpService.put(`/boards/orders`, orderedBoards)
 }
 
 async function downloadBoardExcel(boardId: number, fileName: string) {

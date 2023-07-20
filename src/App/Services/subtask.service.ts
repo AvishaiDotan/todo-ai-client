@@ -1,5 +1,5 @@
 import { httpService } from './http.service'
-import { SubTask, SubTaskOrderSave } from '@/Types'
+import { SubTask } from '@/Types'
 
 function getCompletedTasks() {
   return httpService.get<SubTask[]>(`/subtasks/completed`)
@@ -17,8 +17,8 @@ function deleteSubTask(subtaskId: number) {
   return httpService.delete(`/subtasks/${subtaskId}`)
 }
 
-function saveSubtasksOrder(orderedSubtasks: SubTaskOrderSave) {
-  return httpService.post(`/subtasks/orders`, orderedSubtasks)
+function saveSubtasksOrder(orderedSubtasks: SubTask[]) {
+  return httpService.put(`/subtasks/orders`, orderedSubtasks)
 }
 
 export const subtaskService = {

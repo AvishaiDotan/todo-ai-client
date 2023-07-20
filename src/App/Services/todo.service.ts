@@ -1,5 +1,5 @@
 import { httpService } from './http.service'
-import { Todo, TodoOrderSave } from '@/Types'
+import { Todo } from '@/Types'
 
 function getTodo(todoId: number) {
   return httpService.get<Todo>(`/todos/${todoId}`)
@@ -21,8 +21,8 @@ function deleteTodo(todoId: number) {
   return httpService.delete(`/todos/${todoId}`)
 }
 
-function saveTodosOrder(orderedTodos: TodoOrderSave) {
-  return httpService.post(`/todos/orders`, orderedTodos)
+function saveTodosOrder(orderedTodos: Todo[]) {
+  return httpService.put(`/todos/orders`, orderedTodos)
 }
 
 export const todoService = {

@@ -27,7 +27,7 @@ export default function BoardsPage() {
   }, [])
 
   useEffect(() => {
-    boardList && handleSaveBoardsOrder()
+    boardList.length && handleSaveBoardsOrder(boardList)
   }, [boardList])
 
   const loadContent = async () => {
@@ -43,20 +43,17 @@ export default function BoardsPage() {
   }
 
   const handleSaveBoardsOrder = useCallback(
-    debounce(async () => {
-      await boardService.saveBoardsOrder({
-        boards: boardList,
-      })
+    debounce(async (orderedBoards: Board[]) => {
+      await boardService.saveBoardsOrder(orderedBoards)
     }, 1000),
     []
   )
 
   const handleSortableSetList = async (boards: DataToRender) => {
-    setBoardList((boardListDraft) => {
-      const orderedBoards = boards.map<Board>(
+    setBoardList(() => {
+      return boards.map<Board>(
         (board, idx) => ({ ...board, order: idx + 1 } as Board)
       )
-      boardListDraft && (boardListDraft = orderedBoards)
     })
   }
 

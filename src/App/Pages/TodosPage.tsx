@@ -34,8 +34,8 @@ export default function TodosPage() {
   }, [])
 
   useEffect(() => {
-    boardData?.todos && handleSaveTodosOrder()
-  }, [boardData?.todos])
+    boardData && handleSaveTodosOrder(boardData.todos)
+  }, [boardData])
 
   const loadContent = async () => {
     try {
@@ -50,12 +50,8 @@ export default function TodosPage() {
   }
 
   const handleSaveTodosOrder = useCallback(
-    debounce(async () => {
-      boardData &&
-        (await todoService.saveTodosOrder({
-          boardId: boardData.id,
-          todos: boardData.todos,
-        }))
+    debounce(async (orderedTodos: Todo[]) => {
+      await todoService.saveTodosOrder(orderedTodos)
     }, 1000),
     []
   )
