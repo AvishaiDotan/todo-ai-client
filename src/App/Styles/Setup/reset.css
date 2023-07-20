@@ -48,7 +48,6 @@ table {
 }
 
 a:-webkit-any-link {
-    color: ;
     cursor: pointer;
     text-decoration: none;
 }

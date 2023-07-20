@@ -45,7 +45,6 @@ export enum PageRoute {
   boards = 'boards',
   todos = 'todos',
   completed = 'completed',
-  shared = 'shared',
   signup = 'signup',
   login = 'login',
 }

@@ -63,8 +63,6 @@ export default function NavBar() {
         return 'home'
       case PageRoute.completed:
         return 'completed'
-      case PageRoute.shared:
-        return 'shared'
       case PageRoute.todos:
         return 'todos'
       case PageRoute.login:

@@ -4,7 +4,6 @@ import App from '@/App'
 import HomePage from '@/Pages/HomePage'
 import CompletedPage from '@/Pages/CompletedPage'
 import BoardsPage from '@/Pages/BoardsPage'
-import SharedBoard from '@/Pages/SharedBoard'
 import AuthPage from '@/Pages/AuthPage'
 import TodosPage from '@/Pages/TodosPage'
 import SubtaskPage from '@/Pages/SubtaskPage'
@@ -46,10 +45,6 @@ export const router = createBrowserRouter([
       {
         path: 'signup',
         element: <AuthPage isLoginPage={false} />,
-      },
-      {
-        path: 'shared/:boardId',
-        element: <SharedBoard />,
       },
       {
         path: '*',
