@@ -2,7 +2,7 @@ import Axios, { AxiosRequestConfig } from 'axios'
 export const axios = Axios.create()
 const baseURL = import.meta.env.DEV
   ? 'http://localhost:5065/api' // Development URL
-  : 'https://164.92.179.93/api'   // Production URL
+  : 'https://toyz-js74jg.shop/api' // Production URL
 
 export const httpService = {
   get<T>(endpoint: string, data = null, options?: AxiosRequestConfig) {
