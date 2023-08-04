@@ -84,7 +84,7 @@ export default function NavBar() {
       <div className='gap-x-4 flex link-animation'>
         <NavLink to='/boards'>Boards</NavLink>
 
-        <NavLink to='/completed'>Completed</NavLink>
+        {/* <NavLink to='/completed'>Completed</NavLink> */}
 
         {authLinks}
       </div>
