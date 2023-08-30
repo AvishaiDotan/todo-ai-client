@@ -2,7 +2,8 @@
 
 Welcome to **Todo AI**! This application leverages the power of natural language processing to help you create a todo list effortlessly using plain language. Say goodbye to the hassle of complex interfaces and enjoy a seamless todo-list creation experience.
 
-![Todo AI](![Untitled design (2)](https://github.com/Y-Moshe/todo-ai-client/assets/108017307/3ec70063-5ef0-4af0-8871-a0d51bddc84a))
+![Untitled design (4)](https://github.com/Y-Moshe/todo-ai-client/assets/108017307/04c140ba-2eb8-4314-9f4c-45c14e91ca72)
+
 
 ## Features
 
