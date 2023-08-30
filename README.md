@@ -13,7 +13,6 @@ Welcome to **Todo AI**! This application leverages the power of natural language
 - Remove tasks from the todo list
 - User-friendly and intuitive interface
 - Drag and Drop
-- Responsive design for a smooth experience on various devices
 
 ## Technologies
 
