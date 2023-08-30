@@ -26,4 +26,5 @@ Welcome to **Todo AI**! This application leverages the power of natural language
 
 
 ![Untitled design (5)](https://github.com/Y-Moshe/todo-ai-client/assets/108017307/a0cf3d43-0ed4-4fe5-b79b-e295c94c49df)
-![Uploading Untitled design (6).png…]()
+![Untitled design (6)](https://github.com/Y-Moshe/todo-ai-client/assets/108017307/6e5e9acf-538c-46c5-b884-3acd307a0337)
+
