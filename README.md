@@ -25,5 +25,5 @@ Welcome to **Todo AI**! This application leverages the power of natural language
 - Amazon Web Services (AWS) for Continuous Integration and Continuous Deployment (CI/CD)
 
 
-![Untitled design (2)](https://github.com/Y-Moshe/todo-ai-client/assets/108017307/93adfe93-d233-4237-84f1-e20b8040a339)
-![Untitled design (3)](https://github.com/Y-Moshe/todo-ai-client/assets/108017307/723c0cc2-35e7-46b1-9efc-d132b9f9d223)
+![Untitled design (5)](https://github.com/Y-Moshe/todo-ai-client/assets/108017307/a0cf3d43-0ed4-4fe5-b79b-e295c94c49df)
+![Uploading Untitled design (6).png…]()
